@@ -5,6 +5,10 @@
 - Create a new project by running `nest new <Name> `
 - For all the nest CLI usages see https://docs.nestjs.com/cli/usages
 - For database connection using an ORM use [**Prisma**](https://www.prisma.io/docs/getting-started/quickstart)
+  - `npx prisma --help`
+  - `npx prisma init` to initialise prisma settings
+  - `npx prisma migrate dev`to generate initial migration
+
 - 
 
 # Useful Videos
