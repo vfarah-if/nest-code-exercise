@@ -8,7 +8,7 @@ export class AuthService {
     return { auth: 'login' }
   }
 
-  signup(dto) {
-    return `signup ${dto}`
+  signup(user) {
+    return `signup ${user}`
   }
 }

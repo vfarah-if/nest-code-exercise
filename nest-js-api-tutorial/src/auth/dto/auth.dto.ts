@@ -1,5 +1,11 @@
-export interface AuthDto {
-	@Requi
-  email: string;
-  password: string;
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator'
+
+export class AuthDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string
+
+  @IsNotEmpty()
+  @IsString()
+  password: string
 }

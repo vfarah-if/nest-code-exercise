@@ -7,9 +7,9 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('signup')
-  async signup(@Body() data: AuthDto) {
-    console.log('Body', data)
-    return this.authService.signup(data)
+  async signup(@Body() user: AuthDto) {
+    console.log('Body', user)
+    return this.authService.signup(user)
   }
 
   @Post('signin')
