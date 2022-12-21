@@ -8,7 +8,6 @@ export class AuthController {
 
   @Post('signup')
   async signup(@Body() user: AuthDto) {
-    console.log('Body', user)
     return this.authService.signup(user)
   }
 

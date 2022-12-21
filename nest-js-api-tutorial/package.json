@@ -10,7 +10,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "yarn db:restart && nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -19,10 +19,16 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "db:migrate": "npx prisma migrate deploy"
+    "db:up": "docker compose up",
+    "db:down": "docker compose down",
+    "db:updetached": "docker compose up db -d",
+    "db:remove": "docker compose rm db -s -f -v",
+    "db:migrate": "prisma migrate deploy",
+    "db:restart": "yarn db:remove && yarn db:updetached && sleep 1 && yarn db:migrate"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "4.7.1",
