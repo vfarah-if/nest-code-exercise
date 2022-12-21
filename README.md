@@ -1,6 +1,5 @@
 # Nest JS Exercise
 - Go through the basics and share any links. 
-
 - Install CLI globally `npm install -g @nestjs/cli`
 - Create a new project by running `nest new <Name> `
 - For all the nest CLI usages see https://docs.nestjs.com/cli/usages
@@ -9,7 +8,12 @@
   - `npx prisma init` to initialise prisma settings
   - `npx prisma migrate dev`to generate initial migration
 
-- 
+- Install config for global use
+  - `@nestjs/config`
+
+- Install JWT
+  - `yarn add @nestjs/passport passport passport-local`
+  - `yarn add -D @types/passport-local`
 
 # Useful Videos
 
