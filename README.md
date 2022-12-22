@@ -14,7 +14,8 @@
 - Install JWT
   - `yarn add @nestjs/passport passport passport-local`
   - `yarn add -D @types/passport-local`
-- For testing an API use [Pactum](https://pactumjs.github.io/) or SupeTest, 
+- For e2e testing an API use [Pactum](https://pactumjs.github.io/) or SuperTest
+- For manipulating the environment variables, use `yarn add -D dotenv-cli `
 
 # Useful Videos
 
