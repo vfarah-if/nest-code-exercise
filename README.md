@@ -14,6 +14,7 @@
 - Install JWT
   - `yarn add @nestjs/passport passport passport-local`
   - `yarn add -D @types/passport-local`
+- For testing an API use [Pactum](https://pactumjs.github.io/) or SupeTest, 
 
 # Useful Videos
 
