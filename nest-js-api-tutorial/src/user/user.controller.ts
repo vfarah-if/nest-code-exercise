@@ -9,8 +9,7 @@ export class UserController {
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
   //   getMe(@Req() request: Request) {
-  getMe(@GetUser() user: { sub: number }) {
-    const { sub } = user
+  getMe(@GetUser('sub') sub: number) {
     if (sub) {
       return this.prismaService.user.findUnique({
         where: {
