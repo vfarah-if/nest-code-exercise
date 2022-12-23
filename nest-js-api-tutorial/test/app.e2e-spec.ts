@@ -157,6 +157,7 @@ describe('App', () => {
             firstName: 'John',
             lastName: 'Doe',
           })
+          .stores('userId', 'id')
       })
     })
 
@@ -226,7 +227,27 @@ describe('App', () => {
           ])
       })
     })
-    describe('Get bookmark by id', () => {})
+    describe('Get bookmark by id', () => {
+      it('should get bookmark by id', () => {
+        return pactum
+          .spec()
+          .get('bookmarks/{id}')
+          .withPathParams('id', '$S{bookmarkId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{accessToken}',
+          })
+          .expectStatus(200)
+          .expectBodyContains('$S{bookmarkId}')
+          .expectJsonLike({
+            id: '$S{bookmarkId}',
+            title: 'First Bookmark',
+            description: 'Video about this tut',
+            link: 'https://www.youtube.com/watch?v=d6WC5n9G_sM',
+            userId: '$S{userId}',
+          })
+        // .inspect()
+      })
+    })
     describe('Edit bookmark by id', () => {})
     describe('Delete bookmark by id', () => {})
   })

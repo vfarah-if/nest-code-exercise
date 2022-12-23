@@ -9,7 +9,7 @@ export class UserService {
   getUser(id: number) {
     return this.prismaService.user.findUnique({
       where: { id },
-      select: { email: true, firstName: true, lastName: true },
+      select: { id: true, email: true, firstName: true, lastName: true },
     })
   }
 
@@ -19,7 +19,7 @@ export class UserService {
         id,
       },
       data: { ...user },
-      select: { email: true, firstName: true, lastName: true },
+      select: { id: true, email: true, firstName: true, lastName: true },
     })
   }
 }

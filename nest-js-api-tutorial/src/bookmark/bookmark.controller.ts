@@ -4,6 +4,8 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
+  ParseIntPipe,
   Post,
   UseGuards,
 } from '@nestjs/common'
@@ -29,5 +31,13 @@ export class BookmarkController {
   @Get()
   getBookmarks(@GetUser('sub') userId: number) {
     return this.bookmarkService.getBookmarks(userId)
+  }
+
+  @Get(':id')
+  getBookmarkById(
+    @GetUser('sub') userId: number,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    return this.bookmarkService.getBookmarkById(id, userId)
   }
 }
