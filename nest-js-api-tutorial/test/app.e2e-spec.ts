@@ -184,7 +184,9 @@ describe('App', () => {
       })
     })
   })
+
   describe('Bookmarks', () => {
+    describe('Create bookmark', () => {})
     describe('Get bookmarks', () => {})
     describe('Get bookmark by id', () => {})
     describe('Edit bookmark by id', () => {})
