@@ -1,10 +1,27 @@
-import { Injectable } from '@nestjs/common'
+import { ForbiddenException, Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { CreateBookmarkDto } from './dto'
 
 @Injectable()
 export class BookmarkService {
   constructor(private prismaService: PrismaService) {}
+
+  async deleteBookmarkById(id: number, userId: number) {
+    const bookmark = await this.prismaService.bookmark.findFirst({
+      where: {
+        id,
+        userId,
+      },
+    })
+
+    if (!bookmark) throw new ForbiddenException('Access to resources denied')
+
+    await this.prismaService.bookmark.delete({
+      where: {
+        id,
+      },
+    })
+  }
 
   getBookmarkById(id: number, userId: number) {
     return this.prismaService.bookmark.findFirstOrThrow({

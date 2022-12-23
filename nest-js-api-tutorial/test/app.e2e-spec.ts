@@ -249,6 +249,18 @@ describe('App', () => {
       })
     })
     describe('Edit bookmark by id', () => {})
-    describe('Delete bookmark by id', () => {})
+    describe('Delete bookmark by id', () => {
+      it('should delete bookmark', () => {
+        return pactum
+          .spec()
+          .delete('bookmarks/{id}')
+          .withPathParams('id', '$S{bookmarkId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{accessToken}',
+          })
+          .expectStatus(HttpStatus.NO_CONTENT)
+        // .inspect()
+      })
+    })
   })
 })

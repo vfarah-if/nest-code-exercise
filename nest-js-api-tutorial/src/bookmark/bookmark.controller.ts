@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -28,16 +29,27 @@ export class BookmarkController {
     return this.bookmarkService.createBookmark(userId, bookmark)
   }
 
+  @HttpCode(HttpStatus.OK)
   @Get()
   getBookmarks(@GetUser('sub') userId: number) {
     return this.bookmarkService.getBookmarks(userId)
   }
 
+  @HttpCode(HttpStatus.OK)
   @Get(':id')
   getBookmarkById(
     @GetUser('sub') userId: number,
     @Param('id', ParseIntPipe) id: number,
   ) {
     return this.bookmarkService.getBookmarkById(id, userId)
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete(':id')
+  deleteBookmarkById(
+    @GetUser('sub') userId: number,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    return this.bookmarkService.deleteBookmarkById(id, userId)
   }
 }
