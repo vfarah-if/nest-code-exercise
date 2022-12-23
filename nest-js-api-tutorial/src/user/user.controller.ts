@@ -1,31 +1,33 @@
 import {
+  Body,
   Controller,
   Get,
   HttpCode,
   HttpStatus,
+  Patch,
   Req,
   UseGuards,
 } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
+import { EditUserDto } from '../user/dto'
 import { GetUser } from '../auth/decorator'
-import { PrismaService } from '../prisma/prisma.service'
+import { UserService } from './user.service'
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('users')
 export class UserController {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private userService: UserService) {}
 
   @HttpCode(HttpStatus.OK)
   @Get('me')
   //   getMe(@Req() request: Request) {
   getMe(@GetUser('sub') sub: number) {
-    if (sub) {
-      return this.prismaService.user.findUnique({
-        where: {
-          id: sub,
-        },
-        select: { email: true, firstName: true, lastName: true },
-      })
-    }
+    return this.userService.getUser(sub)
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Patch('me')
+  editMe(@GetUser('sub') sub: number, @Body() user: EditUserDto) {
+    return this.userService.update(sub, user)
   }
 }

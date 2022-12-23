@@ -5,6 +5,7 @@ import { AppModule } from '../src/app.module'
 import * as pactum from 'pactum'
 import { AuthDto } from '../src/auth/dto'
 import { userInfo } from 'os'
+import { EditUserDto } from 'src/user/dto'
 
 describe('App', () => {
   let app: INestApplication
@@ -114,9 +115,8 @@ describe('App', () => {
   })
 
   describe('User', () => {
-    const user: AuthDto = {
+    const user: EditUserDto = {
       email: 'john.doe@test.com',
-      password: 'P@ssword123',
       firstName: 'John',
       lastName: 'Doe',
     }
@@ -162,18 +162,22 @@ describe('App', () => {
 
     describe('Edit user', () => {
       it('should pass when editing an existing user', () => {
-        let alteredUser = { ...user, email: 'john.doe@alteredemailtest.com' }
-        alteredUser.email = ''
+        let alteredUser = {
+          ...user,
+          email: 'john.doe@another.com',
+          firstName: 'JOHN',
+          lastName: 'DOE',
+        }
         return pactum
           .spec()
-          .put('users/me/1')
+          .patch('users/me')
           .withHeaders({
             Authorization: 'Bearer $S{accessToken}',
           })
           .withBody(alteredUser)
           .expectStatus(HttpStatus.OK)
           .expectJsonLike({
-            email: 'john.doe@alteredemailtest.com',
+            email: 'john.doe@another.com',
             firstName: 'JOHN',
             lastName: 'DOE',
           })
@@ -183,7 +187,7 @@ describe('App', () => {
   describe('Bookmarks', () => {
     describe('Get bookmarks', () => {})
     describe('Get bookmark by id', () => {})
-    describe('Edit bookmark', () => {})
-    describe('Delete bookmark', () => {})
+    describe('Edit bookmark by id', () => {})
+    describe('Delete bookmark by id', () => {})
   })
 })
