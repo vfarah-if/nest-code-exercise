@@ -186,7 +186,23 @@ describe('App', () => {
   })
 
   describe('Bookmarks', () => {
-    describe('Create bookmark', () => {})
+    describe('Create bookmark', () => {
+      const dto: CreateBookmarkDto = {
+        title: 'First Bookmark',
+        link: 'https://www.youtube.com/watch?v=d6WC5n9G_sM',
+      }
+      it('should create bookmark', () => {
+        return pactum
+          .spec()
+          .post('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(201)
+          .stores('bookmarkId', 'id')
+      })
+    })
     describe('Get bookmarks', () => {})
     describe('Get bookmark by id', () => {})
     describe('Edit bookmark by id', () => {})
