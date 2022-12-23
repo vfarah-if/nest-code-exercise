@@ -4,8 +4,8 @@ import { PrismaService } from '../src/prisma/prisma.service'
 import { AppModule } from '../src/app.module'
 import * as pactum from 'pactum'
 import { AuthDto } from '../src/auth/dto'
-import { userInfo } from 'os'
-import { EditUserDto } from 'src/user/dto'
+import { EditUserDto } from '../src/user/dto'
+import { CreateBookmarkDto } from '../src/bookmark/dto'
 
 describe('App', () => {
   let app: INestApplication
@@ -164,7 +164,6 @@ describe('App', () => {
       it('should pass when editing an existing user', () => {
         let alteredUser = {
           ...user,
-          email: 'john.doe@another.com',
           firstName: 'JOHN',
           lastName: 'DOE',
         }
@@ -177,7 +176,7 @@ describe('App', () => {
           .withBody(alteredUser)
           .expectStatus(HttpStatus.OK)
           .expectJsonLike({
-            email: 'john.doe@another.com',
+            email: 'john.doe@test.com',
             firstName: 'JOHN',
             lastName: 'DOE',
           })
@@ -190,17 +189,23 @@ describe('App', () => {
       const dto: CreateBookmarkDto = {
         title: 'First Bookmark',
         link: 'https://www.youtube.com/watch?v=d6WC5n9G_sM',
+        description: 'Video about this tut',
       }
       it('should create bookmark', () => {
         return pactum
           .spec()
-          .post('/bookmarks')
+          .post('bookmarks')
           .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
+            Authorization: 'Bearer $S{accessToken}',
           })
           .withBody(dto)
           .expectStatus(201)
           .stores('bookmarkId', 'id')
+          .expectJsonLike({
+            title: 'First Bookmark',
+            description: 'Video about this tut',
+            link: 'https://www.youtube.com/watch?v=d6WC5n9G_sM',
+          })
       })
     })
     describe('Get bookmarks', () => {})

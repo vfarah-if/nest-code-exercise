@@ -21,13 +21,13 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   @Get('me')
   //   getMe(@Req() request: Request) {
-  getMe(@GetUser('sub') sub: number) {
-    return this.userService.getUser(sub)
+  getMe(@GetUser('sub') id: number) {
+    return this.userService.getUser(id)
   }
 
   @HttpCode(HttpStatus.OK)
   @Patch('me')
-  editMe(@GetUser('sub') sub: number, @Body() user: EditUserDto) {
-    return this.userService.update(sub, user)
+  editMe(@GetUser('sub') id: number, @Body() user: EditUserDto) {
+    return this.userService.update(id, user)
   }
 }
