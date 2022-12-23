@@ -261,6 +261,16 @@ describe('App', () => {
           .expectStatus(HttpStatus.NO_CONTENT)
         // .inspect()
       })
+
+      it('should get empty bookmarks', () => {
+        return pactum
+          .spec()
+          .get('bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{accessToken}',
+          })
+          .expectStatus(200)
+      })
     })
   })
 })
