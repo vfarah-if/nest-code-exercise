@@ -32,6 +32,8 @@ Start playing with Open Schema Mock frameworks e.g.
    - https://fakerjs.dev/api/
 2. https://github.com/penx/openapi-mock
 3. https://medium.com/tuimm/api-mocking-with-openapi-d0f7127ce3a7
+4. https://github.com/miragejs
+5. https://mockoon.com/download/
 
 ## Installation
 
