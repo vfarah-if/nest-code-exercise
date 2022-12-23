@@ -5,7 +5,7 @@ import { AppModule } from '../src/app.module'
 import * as pactum from 'pactum'
 import { AuthDto } from '../src/auth/dto'
 import { EditUserDto } from '../src/user/dto'
-import { CreateBookmarkDto } from '../src/bookmark/dto'
+import { CreateBookmarkDto, EditBookmarkDto } from '../src/bookmark/dto'
 
 describe('App', () => {
   let app: INestApplication
@@ -187,11 +187,12 @@ describe('App', () => {
 
   describe('Bookmarks', () => {
     describe('Create bookmark', () => {
-      const dto: CreateBookmarkDto = {
+      const bookmark: CreateBookmarkDto = {
         title: 'First Bookmark',
         link: 'https://www.youtube.com/watch?v=d6WC5n9G_sM',
         description: 'Video about this tut',
       }
+
       it('should create bookmark', () => {
         return pactum
           .spec()
@@ -199,7 +200,7 @@ describe('App', () => {
           .withHeaders({
             Authorization: 'Bearer $S{accessToken}',
           })
-          .withBody(dto)
+          .withBody(bookmark)
           .expectStatus(201)
           .stores('bookmarkId', 'id')
           .expectJsonLike({
@@ -248,7 +249,35 @@ describe('App', () => {
         // .inspect()
       })
     })
-    describe('Edit bookmark by id', () => {})
+
+    describe('Edit bookmark by id', () => {
+      const bookmark: EditBookmarkDto = {
+        title: 'Nest course',
+        description: 'Tut finished',
+      }
+
+      it('should edit bookmark', () => {
+        return pactum
+          .spec()
+          .patch('bookmarks/{id}')
+          .withPathParams('id', '$S{bookmarkId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{accessToken}',
+          })
+          .withBody(bookmark)
+          .expectStatus(200)
+          .expectBodyContains(bookmark.title)
+          .expectBodyContains(bookmark.description)
+          .expectJsonLike({
+            id: '$S{bookmarkId}',
+            title: 'Nest course',
+            description: 'Tut finished',
+            link: 'https://www.youtube.com/watch?v=d6WC5n9G_sM',
+            userId: '$S{userId}',
+          })
+        // .inspect()
+      })
+    })
     describe('Delete bookmark by id', () => {
       it('should delete bookmark', () => {
         return pactum
