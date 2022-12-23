@@ -1,24 +1,44 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { Test, TestingModule } from '@nestjs/testing'
+import { HttpStatus, INestApplication, VersioningType } from '@nestjs/common'
+import * as pactum from 'pactum'
+import { AppModule } from './../src/app.module'
 
 describe('AppController (e2e)', () => {
-  let app: INestApplication;
+  let app: INestApplication
 
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
+  beforeAll(async () => {
+    const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    }).compile()
+    app = moduleRef.createNestApplication()
+    app.enableVersioning({
+      type: VersioningType.URI,
+      defaultVersion: '1',
+    })
+    await app.init()
+    await app.listen(4444)
+    pactum.request.setBaseUrl('http://localhost:4444/')
+  })
 
-    app = moduleFixture.createNestApplication();
-    await app.init();
-  });
+  afterAll(async () => {
+    await app.close()
+  })
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
-  });
-});
+  describe('GET Customers', () => {
+    it('should get customers', () => {
+      return pactum
+        .spec()
+        .get('v1/customers')
+        .expectStatus(HttpStatus.OK)
+        .expectJsonLike({
+          email: 'jane.doe@newlook.com',
+          firstName: 'Jane',
+          lastName: 'Doe',
+          mobileNumber: '+44 797396 7029',
+          dateOfBirth: '1974-11-04',
+          gender: 'Male',
+        })
+        .inspect()
+    })
+  })
+})

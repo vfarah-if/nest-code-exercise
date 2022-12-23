@@ -26,6 +26,13 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+Start playing with Open Schema Mock frameworks e.g. 
+
+1. https://github.com/jormaechea/open-api-mocker#readme
+   - https://fakerjs.dev/api/
+2. https://github.com/penx/openapi-mock
+3. https://medium.com/tuimm/api-mocking-with-openapi-d0f7127ce3a7
+
 ## Installation
 
 ```bash
