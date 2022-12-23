@@ -11,7 +11,7 @@ export class BookmarkService {
     userId: number,
     bookmark: EditBookmarkDto,
   ) {
-    this.validateUserOwnsBookmark
+    this.verifyUserOwnsBookmark(id, userId)
     const result = await this.prismaService.bookmark.update({
       where: {
         id,
@@ -26,7 +26,7 @@ export class BookmarkService {
   }
 
   async deleteBookmarkById(id: number, userId: number) {
-    await this.validateUserOwnsBookmark(id, userId)
+    await this.verifyUserOwnsBookmark(id, userId)
 
     await this.prismaService.bookmark.delete({
       where: {
@@ -35,7 +35,7 @@ export class BookmarkService {
     })
   }
 
-  private async validateUserOwnsBookmark(id: number, userId: number) {
+  private async verifyUserOwnsBookmark(id: number, userId: number) {
     const bookmark = await this.prismaService.bookmark.findFirst({
       where: {
         id,
@@ -47,7 +47,7 @@ export class BookmarkService {
   }
 
   getBookmarkById(id: number, userId: number) {
-    return this.prismaService.bookmark.findFirstOrThrow({
+    return this.prismaService.bookmark.findFirst({
       where: {
         id,
         userId,
