@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -23,5 +24,10 @@ export class BookmarkController {
     @Body() bookmark: CreateBookmarkDto,
   ) {
     return this.bookmarkService.createBookmark(userId, bookmark)
+  }
+
+  @Get()
+  getBookmarks(@GetUser('sub') userId: number) {
+    return this.bookmarkService.getBookmarks(userId)
   }
 }

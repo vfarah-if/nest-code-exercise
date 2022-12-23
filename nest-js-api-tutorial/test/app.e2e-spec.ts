@@ -208,7 +208,24 @@ describe('App', () => {
           })
       })
     })
-    describe('Get bookmarks', () => {})
+    describe('Get bookmarks', () => {
+      it('should get bookmarks by user', () => {
+        return pactum
+          .spec()
+          .get('bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{accessToken}',
+          })
+          .expectStatus(200)
+          .expectJsonLike([
+            {
+              title: 'First Bookmark',
+              description: 'Video about this tut',
+              link: 'https://www.youtube.com/watch?v=d6WC5n9G_sM',
+            },
+          ])
+      })
+    })
     describe('Get bookmark by id', () => {})
     describe('Edit bookmark by id', () => {})
     describe('Delete bookmark by id', () => {})
