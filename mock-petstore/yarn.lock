@@ -1719,6 +1719,13 @@
   resolved "https://registry.npmjs.org/@types/mime/-/mime-3.0.1.tgz"
   integrity sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==
 
+"@types/mongoose-paginate@^5.0.12":
+  version "5.0.12"
+  resolved "https://registry.yarnpkg.com/@types/mongoose-paginate/-/mongoose-paginate-5.0.12.tgz#7b8d78920ef5d96ad8d5c826be7171693b05d960"
+  integrity sha512-5t4nP0ryBoDEMDaegH1DZdyyOStVfRXTs544dMKm48X+/GanK93cM/2rMY3AZjHDK6Ay4G/D+xDFJR8hb4iC8Q==
+  dependencies:
+    mongoose "^6.3.0"
+
 "@types/node@*":
   version "16.18.10"
   resolved "https://registry.npmjs.org/@types/node/-/node-16.18.10.tgz"
@@ -2286,6 +2293,11 @@ bl@^4.0.3, bl@^4.1.0:
     buffer "^5.5.0"
     inherits "^2.0.4"
     readable-stream "^3.4.0"
+
+bluebird@3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.0.5.tgz#2ff9d07c9b3edb29d6d280fe07528365e7ecd392"
+  integrity sha512-5o9RE3ued60EEv6gcT5L2APn/4zSpAwzeH65fuF+d/K3/LGZ9JpGIlDU2HeI4NujAY5Wh7mUBM5UF3Zuh8bBhQ==
 
 body-parser@1.20.1, body-parser@^1.19.0:
   version "1.20.1"
@@ -4594,7 +4606,14 @@ mongodb@~4.11.0:
     "@aws-sdk/credential-providers" "^3.186.0"
     saslprep "^1.0.3"
 
-mongoose@^6.8.1:
+mongoose-paginate@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/mongoose-paginate/-/mongoose-paginate-5.0.3.tgz#d7ae49ed5bf64f1f7af7620ea865b67058c55371"
+  integrity sha512-sqrQJJ2nY7z2S5XzrMxbnlnAXpOnqyyM8t/FQ4Rv0uimYyacitmVSZOjlotbiQLI8I4v4hy3dCtJn31+OPl5Wg==
+  dependencies:
+    bluebird "3.0.5"
+
+mongoose@^6.3.0, mongoose@^6.8.1:
   version "6.8.1"
   resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.8.1.tgz#7a5bf02241b88317ceca459beac9db5ff1ce8225"
   integrity sha512-utr2hclZ+/QlO+JuVd33dxzvLKtByEhaLj8mEO+tqCm6pgOboKv+DWcvJDEcCMl4Rgd1ubgfYz4cZ9BWyHmC3Q==

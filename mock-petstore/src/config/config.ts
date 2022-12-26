@@ -10,6 +10,8 @@ const config = {
   dbName: process.env.DATABASE_DBNAME || 'petstore',
   dbUser: process.env.DATABASE_USER,
   dbPassword: process.env.DATABASE_PASS,
+  hasAuthDetails:
+    process.env.DATABASE_USER || process.env.DATABASE_PASS ? true : false,
 }
 // console.debug('.env config', config)
 export { config }

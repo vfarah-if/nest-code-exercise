@@ -1,7 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { HttpStatus, INestApplication, VersioningType } from '@nestjs/common'
 import * as pactum from 'pactum'
-import { AppModule } from './../src/app.module'
+import { AppModule } from '../src/app.module'
+import { seedDb } from '../src/db/seed'
+import { closeDbContext, dbContext } from '../src/db/db_context'
 
 describe('AppController (e2e)', () => {
   let app: INestApplication
@@ -17,16 +19,20 @@ describe('AppController (e2e)', () => {
     })
     await app.init()
     await app.listen(4444)
+    await dbContext()
+    await seedDb()
+
     pactum.request.setBaseUrl('http://localhost:4444/')
   })
 
   afterAll(async () => {
+    await closeDbContext()
     await app.close()
   })
 
   describe('GET Customers', () => {
-    it('should get customers', () => {
-      return pactum
+    it('should get customers', async () => {
+      return await pactum
         .spec()
         .get('v1/customers')
         .expectStatus(HttpStatus.OK)

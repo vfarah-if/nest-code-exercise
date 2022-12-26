@@ -7,19 +7,25 @@ const dbContext = async (): Promise<Mongoose> => {
    *  NOTE: If this is failing, you have not setup the .env
    *   file in the root of the project - see readme for more
    */
-  const { dbUrl, dbName, dbUser, dbPassword, dbPort, isInMemoryDatabase } =
-    config
+  const {
+    dbUrl,
+    dbName,
+    dbUser,
+    dbPassword,
+    dbPort,
+    isInMemoryDatabase,
+    hasAuthDetails,
+  } = config
   console.assert(dbUrl)
   console.assert(dbName)
   console.assert(dbPort)
   let uri = dbUrl
-  let mongoDb: MongoMemoryServer = undefined
+  let mongoDb = undefined
   if (isInMemoryDatabase) {
     console.debug(
       `Preparing inMemoryDatabase ${dbName} on port ${dbPort} with user '${dbUser}'
 		 password '${dbPassword}'`,
     )
-    const hasAuthDetails = dbUser || dbPassword ? true : false
     mongoDb = await MongoMemoryServer.create({
       auth: {
         customRootName: dbUser,
@@ -36,7 +42,7 @@ const dbContext = async (): Promise<Mongoose> => {
   console.debug(
     `Connecting to Mongo database ${dbName} with user '${
       isInMemoryDatabase ? 'None' : dbUser
-    }' on URL '${isInMemoryDatabase ? mongoDb.getUri(dbName) : uri}'`,
+    }' on URL '${uri}'`,
   )
 
   const options = {
