@@ -1,9 +1,8 @@
 import { VersioningType } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
-import mongoose from 'mongoose'
 import { AppModule } from './app.module'
 import { config } from './config'
-import { dbContext } from './db/db_context'
+import { closeDbContext, dbContext } from './db/db_context'
 import { seedDb } from './db/seed'
 const { port } = config
 
@@ -41,6 +40,16 @@ async function bootstrap() {
     await mocker.validate()
     await mocker.mock()
   }
+}
+
+process.on('close', shutDown)
+process.on('SIGTERM', shutDown)
+process.on('SIGINT', shutDown)
+function shutDown() {
+  closeDbContext().then(() => {
+    console.log('Closed out remaining connections')
+    process.exit(0)
+  })
 }
 
 bootstrap()
