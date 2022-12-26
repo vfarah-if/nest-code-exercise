@@ -11,5 +11,5 @@ const config = {
   dbUser: process.env.DATABASE_USER,
   dbPassword: process.env.DATABASE_PASS,
 }
-console.log(config)
+// console.debug('.env config', config)
 export { config }

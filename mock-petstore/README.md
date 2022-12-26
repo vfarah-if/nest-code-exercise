@@ -35,6 +35,8 @@ Start playing with Open Schema Mock frameworks e.g.
 4. https://github.com/miragejs
 5. https://mockoon.com/download/
 
+Create an in-memory database that gets created
+
 ## Installation
 
 ```bash

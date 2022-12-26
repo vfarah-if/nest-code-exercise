@@ -2,8 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["mongodb"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -11,11 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Method {
+  GET
+  PUT
+  PATCH
+  POST
+  DELETE
+}
+
 model Mockendpoint {
   id             String  @id @default(auto()) @map("_id") @db.ObjectId
   url            String
+  method         Method  @default(GET)
   params         String?
-  response       String?
+  jsonResponse   String?
   raiseException Boolean @default(false)
 
   @@unique([url, params])
