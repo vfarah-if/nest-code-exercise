@@ -18,7 +18,5 @@ describe('CustomersController', () => {
     expect(controller).toBeDefined()
   })
 
-  it('should get customers', () => {
-    expect(controller.getCustomers()).toBeDefined()
-  })
+  it.todo('should get customers')
 })
