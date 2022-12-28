@@ -1,4 +1,12 @@
-import { Controller, Get, Version } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Res,
+  Version,
+} from '@nestjs/common'
+import { Response } from 'express'
 import { CustomersService } from './customers.service'
 
 @Controller('customers')
@@ -7,7 +15,8 @@ export class CustomersController {
 
   @Get()
   @Version('1')
-  getCustomers() {
-    return this.customerService.getCustomers()
+  @HttpCode(HttpStatus.CREATED)
+  getCustomers(@Res() response: Response) {
+    return this.customerService.getCustomers(response)
   }
 }

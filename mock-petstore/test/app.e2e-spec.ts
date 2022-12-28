@@ -35,7 +35,7 @@ describe('AppController (e2e)', () => {
       return await pactum
         .spec()
         .get('v1/customers')
-        .expectStatus(HttpStatus.OK)
+        .expectStatus(HttpStatus.CREATED)
         .expectJsonLike({
           email: 'jane.doe@newlook.com',
           firstName: 'Jane',

@@ -17,6 +17,7 @@
   - `yarn add -D @types/passport-local`
 - For e2e testing an API use [Pactum](https://pactumjs.github.io/) or SuperTest
 - For manipulating the environment variables, use `yarn add -D dotenv-cli `
+- For mocking mongo database, using an ephemeral database use https://github.com/nodkz/mongodb-memory-server
 
 # Useful Videos
 

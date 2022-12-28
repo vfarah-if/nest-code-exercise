@@ -11,6 +11,6 @@ const config: Config = {
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
 }
-// Configure test emnvironment variables
+// Configure test environment variables
 require('dotenv').config({ path: './test.env' })
 export default config

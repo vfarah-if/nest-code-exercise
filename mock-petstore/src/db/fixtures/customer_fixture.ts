@@ -1,18 +1,20 @@
-export function customerFixture(): (
-  | import('mongoose').Document<any, any, any>
-  | {
-      url: string
-      method: string
-      jsonResponse: {
-        email: string
-        firstName: string
-        lastName: string
-        mobileNumber: string
-        dateOfBirth: string
-        gender: string
-      }
-    }
-)[] {
+export type DocumentType = import('mongoose').Document<any, any, any>
+
+export type MockEndpointType = {
+  url: string
+  method: string
+  jsonResponse: {
+    email: string
+    firstName: string
+    lastName: string
+    mobileNumber: string
+    dateOfBirth: string
+    gender: string
+  }
+  httpStatus: string
+}
+
+export function customerFixture(): (DocumentType | MockEndpointType)[] {
   return [
     {
       url: 'v1/customers',
@@ -25,6 +27,7 @@ export function customerFixture(): (
         dateOfBirth: '1974-11-04',
         gender: 'Male',
       },
+      httpStatus: 'CREATED',
     },
   ]
 }
