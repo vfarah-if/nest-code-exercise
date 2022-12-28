@@ -1,4 +1,8 @@
+import { HttpStatus, Res } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
+import { response, Response } from 'express'
+import { customerFixture, DocumentType, MockEndpointType } from '../db/fixtures'
+import Mockendpoint from '../db/models'
 import { CustomersService } from './customers.service'
 
 describe('CustomersService', () => {
@@ -16,7 +20,13 @@ describe('CustomersService', () => {
     expect(service).toBeDefined()
   })
 
-  it.todo('should get customers')
+  // it.only('should get customers', async () => {
+  //   const result = customerFixture()[0]
+  //   // @ts-ignore
+  //   jest.spyOn(Mockendpoint, 'findOne').mockReturnValue(result)
+  //   const actual = await service.getCustomers()
+  //   expect(actual).toBeDefined()
+  // })
   // it('should get customers', () => {
   //   expect(service.getCustomers()).toStrictEqual({
   //     email: 'jane.doe@newlook.com',

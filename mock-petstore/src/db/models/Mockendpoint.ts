@@ -13,8 +13,8 @@ const mockendpointSchema = new Schema({
     enum: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE'],
     default: 'GET',
   },
-  params: {
-    type: String,
+  headerParams: {
+    type: Object,
   },
   jsonResponse: {
     type: Object,
@@ -83,7 +83,10 @@ const mockendpointSchema = new Schema({
     default: Date.now,
   },
 })
-mockendpointSchema.index({ url: 1, method: 1, params: 1 }, { unique: true })
+mockendpointSchema.index(
+  { url: 1, method: 1, headerParams: 1 },
+  { unique: true },
+)
 mockendpointSchema.plugin(mongoosePaginate)
 
 const Mockendpoint = model('mockendpoint', mockendpointSchema)
