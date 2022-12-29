@@ -33,9 +33,9 @@ export class ContentstackService {
       ? response
           // @ts-ignore
           .status(HttpStatus[doc['httpStatus']])
-          .send(doc['jsonResponse'])
+          .json(doc['jsonResponse'])
       : response
           .status(HttpStatus.NOT_FOUND)
-          .send({ data: `Configure test to accept GET ${url}` })
+          .json({ data: `Configure test to accept GET ${url}` })
   }
 }

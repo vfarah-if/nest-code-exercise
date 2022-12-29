@@ -1,6 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing'
+import { customerFixture, MockEndpointType } from '../db/fixtures'
+import Mockendpoint from '../db/models'
 import { CustomersController } from './customers.controller'
 import { CustomersService } from './customers.service'
+import { Response } from 'express'
+import { HttpStatus } from '@nestjs/common'
+const mockingoose = require('mockingoose')
 
 describe('CustomersController', () => {
   let controller: CustomersController
@@ -14,6 +19,7 @@ describe('CustomersController', () => {
 
     controller = module.get<CustomersController>(CustomersController)
     service = module.get<CustomersService>(CustomersService)
+    mockingoose.resetAll()
   })
 
   it('should have controller defined', () => {
@@ -24,23 +30,19 @@ describe('CustomersController', () => {
     expect(service).toBeDefined()
   })
 
-  it.todo('should get customers')
+  it('should get customers wth correct status and the correct json', async () => {
+    // @ts-ignore
+    const response: Response = {}
+    const mockStatus = jest.fn().mockReturnValue(response)
+    response.status = mockStatus
+    const mockJson = jest.fn().mockReturnValue(response)
+    response.json = mockJson
+    const findOneResponse = <MockEndpointType>customerFixture()[0]
+    mockingoose(Mockendpoint).toReturn(findOneResponse, 'findOne')
 
-  // it.only('should get customers', async () => {
-  //   const result = customerFixture()[0]
-  //   // @ts-ignore
-  //   jest.spyOn(Mockendpoint, 'findOne').mockReturnValue(result)
-  //   const actual = await service.getCustomers()
-  //   expect(actual).toBeDefined()
-  // })
-  // it('should get customers', () => {
-  //   expect(service.getCustomers()).toStrictEqual({
-  //     email: 'jane.doe@newlook.com',
-  //     firstName: 'Jane',
-  //     lastName: 'Doe',
-  //     mobileNumber: '+44 797396 7029',
-  //     dateOfBirth: '1974-11-04',
-  //     gender: 'Male',
-  //   })
-  // })
+    await controller.getCustomers(response)
+
+    expect(mockStatus).toBeCalledWith(HttpStatus[findOneResponse.httpStatus])
+    expect(mockJson).toBeCalledWith(findOneResponse.jsonResponse)
+  })
 })

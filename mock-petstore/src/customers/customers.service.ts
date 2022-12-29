@@ -19,9 +19,9 @@ export class CustomersService {
       ? response
           // @ts-ignore
           .status(HttpStatus[doc['httpStatus']])
-          .send(doc['jsonResponse'])
+          .json(doc['jsonResponse'])
       : response
           .status(HttpStatus.NOT_FOUND)
-          .send('Configure test to accept GET v1/customers')
+          .json({ data: 'Configure test to accept GET v1/customers' })
   }
 }

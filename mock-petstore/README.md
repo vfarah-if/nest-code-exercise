@@ -35,7 +35,11 @@ Start playing with Open Schema Mock frameworks e.g.
 4. https://github.com/miragejs
 5. https://mockoon.com/download/
 
-Create an in-memory database that gets created
+Create an in-memory mongo database `yarn add mongodb-memory-server`
+
+Create mongoose and pagination `yarn add mongoose` and `yarn add mongoose-paginate`
+
+For mocking mongoose use `yarn add -D mockingoose` 
 
 ## Installation
 
