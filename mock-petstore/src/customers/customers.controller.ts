@@ -16,7 +16,9 @@ export class CustomersController {
   @Get()
   @Version('1')
   @HttpCode(HttpStatus.CREATED)
-  getCustomers(@Res() response: Response) {
+  getCustomers(
+    @Res() response: Response,
+  ): Promise<Response<any, Record<string, any>>> {
     return this.customerService.getCustomers(response)
   }
 }

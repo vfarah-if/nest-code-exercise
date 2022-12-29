@@ -5,7 +5,7 @@ import { Response } from 'express'
 @Injectable()
 export class CustomersService {
   async getCustomers(
-    response: Response,
+    response: Response<any, Record<string, any>>,
   ): Promise<Response<any, Record<string, any>>> {
     const doc = await Mockendpoint.findOne({
       url: 'v1/customers',
