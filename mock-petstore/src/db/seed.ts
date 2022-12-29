@@ -1,4 +1,4 @@
-import { contentFixture, customerFixture } from './fixtures'
+import { contentStackFixture, customerFixture } from './fixtures'
 import Mockendpoint from './models'
 
 export async function seedDb(): Promise<void> {
@@ -12,7 +12,7 @@ export async function seedCustomers() {
 }
 
 export async function seedContents() {
-  const response = await Mockendpoint.insertMany(contentFixture())
+  const response = await Mockendpoint.insertMany(contentStackFixture())
   console.debug('Populated content mocks with', response)
   return response
 }
