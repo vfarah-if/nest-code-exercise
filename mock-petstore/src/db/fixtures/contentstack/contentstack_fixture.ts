@@ -1,13 +1,14 @@
 import { nl_homepage_en_gb } from './nl_homepage_en_gb'
 import { DocumentType, MockEndpointType } from '../types'
+import { config } from '../../../config'
 
 export function contentStackFixture(): (DocumentType | MockEndpointType)[] {
   return [
-    // v3/content_types/{{content_type_uid}}/entries/{{entry_uid}}
-    //  ?version=4&environment={{environment}}&locale={{locale}}
-    //  &include_fallback=true&include_branch=false
+    // https://{{base_url}}/v3/content_types/{{content_type_uid}}/entries
+    //  ?locale={{locale}}&include_fallback=true&include_branch=false&environment={{environment}}
+    // TODO: Variations on all teh available test options with other values
     {
-      url: '/v3/content_types/nl_homepage/entries?environment=',
+      url: `v3/content_types/nl_homepage/entries?local=en-gb&include_fallback=true&include_branch=true&environment=${config.contentStackDeliveryApi.environment}`,
       method: 'GET',
       jsonResponse: nl_homepage_en_gb,
       httpStatus: 'OK',

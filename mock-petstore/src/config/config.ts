@@ -18,6 +18,9 @@ const config = {
   dbPassword: process.env.DATABASE_PASS,
   hasAuthDetails:
     process.env.DATABASE_USER || process.env.DATABASE_PASS ? true : false,
+  contentStackDeliveryApi: {
+    environment: process.env.CONTENT_STACK_ENVIRONMENT,
+  },
 }
-// console.debug('.env config', config)
+console.debug('.env', config)
 export { config }

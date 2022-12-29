@@ -2,6 +2,9 @@
 
 exports[`config should configure defaults 1`] = `
 Object {
+  "contentStackDeliveryApi": Object {
+    "environment": "test-sandbox",
+  },
   "dbName": "test-petstore",
   "dbPassword": "P@ssword1",
   "dbPort": 27017,

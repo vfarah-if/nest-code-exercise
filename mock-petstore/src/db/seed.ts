@@ -2,7 +2,7 @@ import { contentStackFixture, customerFixture } from './fixtures'
 import Mockendpoint from './models'
 
 export async function seedDb(): Promise<void> {
-  Promise.all([await seedCustomers(), await seedContents()])
+  Promise.all([await seedCustomers(), await seedContentstack()])
 }
 
 export async function seedCustomers() {
@@ -11,7 +11,7 @@ export async function seedCustomers() {
   return response
 }
 
-export async function seedContents() {
+export async function seedContentstack() {
   const response = await Mockendpoint.insertMany(contentStackFixture())
   console.debug('Populated content mocks with', response)
   return response
