@@ -9,7 +9,6 @@ export class ContentstackService {
     contentTypeUid: string,
     environment: string,
     locale: string = 'en-gb',
-
     includeFallback: boolean = true,
     includeBranch: boolean = false,
   ): Promise<
@@ -17,11 +16,11 @@ export class ContentstackService {
     | PromiseLike<import('express').Response<any, Record<string, any>>>
   > {
     const url =
-      `v3/content_types/${contentTypeUid}/entries?local=${locale}` +
-      `&include_fallback=${includeFallback ? 'true' : 'false'}&include_branch=${
-        includeBranch ? 'true' : 'false'
-      }&environment=${environment}`
-    console.debug('getEntries for ', url)
+      `v3/content_types/${contentTypeUid}/entries?locale=${locale}` +
+      `&include_fallback=${String(includeFallback)}` +
+      `&include_branch=${String(includeBranch)}` +
+      `&environment=${environment}`
+    console.debug('Finding entries for ', url)
     const doc = await Mockendpoint.findOne({
       url,
       method: 'GET',
@@ -30,11 +29,13 @@ export class ContentstackService {
       httpStatus: 1,
     })
     console.log(doc)
-    return (
-      response
-        // @ts-ignore
-        .status(HttpStatus[doc['httpStatus']])
-        .send(doc['jsonResponse'])
-    )
+    return doc
+      ? response
+          // @ts-ignore
+          .status(HttpStatus[doc['httpStatus']])
+          .send(doc['jsonResponse'])
+      : response
+          .status(HttpStatus.NOT_FOUND)
+          .send({ data: `Configure test to accept GET ${url}` })
   }
 }

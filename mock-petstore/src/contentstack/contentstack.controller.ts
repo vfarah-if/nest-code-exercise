@@ -8,6 +8,7 @@ import {
   Version,
 } from '@nestjs/common'
 import { Response } from 'express'
+import { config } from '../config'
 import { ContentstackService } from './contentstack.service'
 
 @Controller('content_types')
@@ -25,10 +26,18 @@ export class ContentstackController {
     @Query('include_fallback') includeFallback?: boolean,
     @Query('include_branch') includeBranch?: boolean,
   ): Promise<Response<any, Record<string, any>>> {
+    console.debug(
+      'From Controller',
+      contentTypeUid,
+      environment || config.contentStackDeliveryApi.environment,
+      locale,
+      includeFallback,
+      includeBranch,
+    )
     return this.service.getEntries(
       response,
       contentTypeUid,
-      environment,
+      environment || config.contentStackDeliveryApi.environment,
       locale,
       includeFallback,
       includeBranch,

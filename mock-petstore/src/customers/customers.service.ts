@@ -15,11 +15,13 @@ export class CustomersService {
       httpStatus: 1,
     })
     console.log(doc)
-    return (
-      response
-        // @ts-ignore
-        .status(HttpStatus[doc['httpStatus']])
-        .send(doc['jsonResponse'])
-    )
+    return doc
+      ? response
+          // @ts-ignore
+          .status(HttpStatus[doc['httpStatus']])
+          .send(doc['jsonResponse'])
+      : response
+          .status(HttpStatus.NOT_FOUND)
+          .send('Configure test to accept GET v1/customers')
   }
 }

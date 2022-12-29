@@ -1,3 +1,4 @@
+require('dotenv').config()
 import { Test } from '@nestjs/testing'
 import { HttpStatus, INestApplication, VersioningType } from '@nestjs/common'
 import * as pactum from 'pactum'
@@ -58,7 +59,7 @@ describe('AppController (e2e)', () => {
         return await pactum
           .spec()
           .get(
-            'v3/content_types/nl_homepage/entries?local=en-gb' +
+            'v3/content_types/nl_homepage/entries?locale=en-gb' +
               `&include_fallback=true&include_branch=false&environment=${environment}`,
           )
           .expectStatus(HttpStatus.OK)
