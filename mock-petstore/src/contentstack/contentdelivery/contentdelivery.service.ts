@@ -1,17 +1,28 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Response } from 'express'
-import Mockendpoint from '../db/models'
+import Mockendpoint from '../../db/models'
+
+interface getEntriesOptions {
+  response: Response<any, Record<string, any>>
+  contentTypeUid: string
+  environment: string
+  locale?: string
+  includeFallback?: boolean
+  includeBranch?: boolean
+  headers?: any
+}
 
 @Injectable()
-export class ContentstackService {
-  async getEntries(
-    response: Response<any, Record<string, any>>,
-    contentTypeUid: string,
-    environment: string,
-    locale: string = 'en-gb',
-    includeFallback: boolean = true,
-    includeBranch: boolean = false,
-  ): Promise<
+export class ContentDeliveryService {
+  async getEntries({
+    response,
+    contentTypeUid,
+    environment,
+    locale = 'en-gb',
+    includeFallback = true,
+    includeBranch = false,
+    headers = undefined,
+  }: getEntriesOptions): Promise<
     | import('express').Response<any, Record<string, any>>
     | PromiseLike<import('express').Response<any, Record<string, any>>>
   > {
@@ -20,10 +31,14 @@ export class ContentstackService {
       `&include_fallback=${String(includeFallback)}` +
       `&include_branch=${String(includeBranch)}` +
       `&environment=${environment}`
-    console.debug('Finding entries for ', url)
+    const headerParams = headers['x-test']
+      ? { 'x-test': headers['x-test'] }
+      : undefined
+    console.debug('Finding entries for ', url, 'Headers: ', headers)
     const doc = await Mockendpoint.findOne({
       url,
       method: 'GET',
+      headerParams,
     }).select({
       jsonResponse: 1,
       httpStatus: 1,

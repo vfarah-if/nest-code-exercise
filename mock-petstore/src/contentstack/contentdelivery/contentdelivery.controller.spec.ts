@@ -1,24 +1,26 @@
 import { HttpStatus } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { Response } from 'express'
-import { contentStackFixture, MockEndpointType } from '../db/fixtures'
-import Mockendpoint from '../db/models'
-import { ContentstackController } from './contentstack.controller'
-import { ContentstackService } from './contentstack.service'
+import { contentStackFixture, MockEndpointType } from '../../db/fixtures'
+import Mockendpoint from '../../db/models'
+import { ContentDeliveryController } from './contentdelivery.controller'
+import { ContentDeliveryService } from './contentdelivery.service'
 const mockingoose = require('mockingoose')
 
-describe('ContentstackController', () => {
-  let controller: ContentstackController
-  let service: ContentstackService
+describe('ContentDeliveryController', () => {
+  let controller: ContentDeliveryController
+  let service: ContentDeliveryService
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ContentstackService],
-      controllers: [ContentstackController],
+      providers: [ContentDeliveryService],
+      controllers: [ContentDeliveryController],
     }).compile()
 
-    controller = module.get<ContentstackController>(ContentstackController)
-    service = module.get<ContentstackService>(ContentstackService)
+    controller = module.get<ContentDeliveryController>(
+      ContentDeliveryController,
+    )
+    service = module.get<ContentDeliveryService>(ContentDeliveryService)
     mockingoose.resetAll()
   })
 
@@ -46,7 +48,7 @@ describe('ContentstackController', () => {
     expect(mockJson).toBeCalledWith(findOneResponse.jsonResponse)
   })
 
-  it('should get contentstack not found a useful message for the tester', async () => {
+  it('should get contentstack not found seful message for the tester to create missing scneario', async () => {
     // @ts-ignore
     const response: Response = {}
     const mockStatus = jest.fn().mockReturnValue(response)

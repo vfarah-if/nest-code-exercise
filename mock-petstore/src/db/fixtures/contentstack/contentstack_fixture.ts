@@ -38,7 +38,7 @@ export function contentStackFixture(): (DocumentType | MockEndpointType)[] {
       httpStatus: 'OK',
     },
     {
-      url: '/v3/content_types/nl_homepage',
+      url: 'v3/content_types/nl_homepage/entries?locale=en-gb&include_fallback=true&include_branch=false&environment=dev-sandbox',
       method: 'GET',
       jsonResponse: {
         error: 'Unauthorised',

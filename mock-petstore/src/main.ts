@@ -15,9 +15,11 @@ async function bootstrap() {
   })
   dbContext()
     .then(() => {
-      console.log('Connection to Mongo open')
+      console.debug('Connection to Mongo open')
       // seed test data
-      seedDb()
+      seedDb().then((value) => {
+        console.debug('Finished seeding data', value)
+      })
     })
     .catch((error) => {
       const warningMessage = `Unable to connect to the local Mongo 

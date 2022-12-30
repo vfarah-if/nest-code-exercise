@@ -1,9 +1,7 @@
-import { Module } from '@nestjs/common';
-import { ContentstackController } from './contentstack.controller';
-import { ContentstackService } from './contentstack.service';
+import { Module } from '@nestjs/common'
+import { ContentstackDeliveryModule } from './contentdelivery/contentdelivery.module'
 
 @Module({
-  controllers: [ContentstackController],
-  providers: [ContentstackService]
+  imports: [ContentstackDeliveryModule],
 })
 export class ContentstackModule {}
