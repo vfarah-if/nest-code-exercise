@@ -5,6 +5,7 @@ export const nl_homepage_en_gb = {
       locale: 'en-gb',
       uid: 'bltc11602372b9095e3',
       ACL: {},
+      description: 'Sponsored by Farah ...',
       _in_progress: false,
       body: [
         {

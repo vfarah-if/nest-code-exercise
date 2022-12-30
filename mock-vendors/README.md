@@ -41,6 +41,10 @@ Create mongoose and pagination `yarn add mongoose` and `yarn add mongoose-pagina
 
 For mocking mongoose use `yarn add -D mockingoose` 
 
+Mocking a vendor like contentstack
+
+![image-20221230142446700](./assets/mock-contentstack-vendor.png)
+
 ## Installation
 
 ```bash
