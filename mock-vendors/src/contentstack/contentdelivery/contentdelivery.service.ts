@@ -31,9 +31,8 @@ export class ContentDeliveryService {
       `&include_fallback=${String(includeFallback)}` +
       `&include_branch=${String(includeBranch)}` +
       `&environment=${environment}`
-    const headerParams = headers['x-test']
-      ? { 'x-test': headers['x-test'] }
-      : undefined
+    const headerParams =
+      headers && headers['x-test'] ? { 'x-test': headers['x-test'] } : undefined
     console.debug('Finding entries for ', url, 'Headers: ', headers)
     const doc = await Mockendpoint.findOne({
       url,

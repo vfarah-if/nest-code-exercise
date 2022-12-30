@@ -5,10 +5,10 @@ Object {
   "contentStackDeliveryApi": Object {
     "environment": "test-sandbox",
   },
-  "dbName": "test-petstore",
+  "dbName": "test-vendors",
   "dbPassword": "P@ssword1",
   "dbPort": 27017,
-  "dbUrl": "mongodb://user:P@ssword1@127.0.0.1:12345/test-petstore?ssl=false&connectTimeoutMS=5000&maxPoolSize=50",
+  "dbUrl": "mongodb://user:P@ssword1@127.0.0.1:12345/test-vendors?ssl=false&connectTimeoutMS=5000&maxPoolSize=50",
   "dbUser": "user",
   "hasAuthDetails": true,
   "isDev": false,

@@ -3,7 +3,7 @@ const DEFAULT_PORT = '4444'
 const DEV_NODE_ENV = 'development'
 const PROD_NODE_DEV = 'production'
 const TEST_NODE_EV = 'test'
-const DEFAULT_DB_NAME = 'petstore'
+const DEFAULT_DB_NAME = 'vendors'
 const config = {
   port: parseInt(process.env.PORT || DEFAULT_PORT, 10),
   isDev: process.env.NODE_ENV === DEV_NODE_ENV,
