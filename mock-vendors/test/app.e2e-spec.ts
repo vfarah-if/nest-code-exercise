@@ -98,12 +98,34 @@ describe('AppController (e2e)', () => {
           return await pactum
             .spec()
             .get(
-              'v3/content_types/nl_homepage/entries?locale=en-us' +
+              'v3/content_types/nl_homepage/entries?locale=en-fr' +
                 `&include_fallback=true&include_branch=false&environment=${environment}`,
             )
             .expectStatus(HttpStatus.NOT_FOUND)
             .expectJsonLike({
-              data: 'Configure test to accept GET v3/content_types/nl_homepage/entries?locale=en-us&include_fallback=true&include_branch=false&environment=dev-sandbox',
+              data: 'Configure test to accept GET v3/content_types/nl_homepage/entries?locale=en-fr&include_fallback=true&include_branch=false&environment=dev-sandbox',
+            })
+            .inspect()
+        })
+
+        it('should get entities with ok using en-us locle', async () => {
+          const { environment } = config.contentStackDeliveryApi
+          return await pactum
+            .spec()
+            .get(
+              'v3/content_types/nl_homepage/entries?locale=en-us' +
+                `&include_fallback=true&include_branch=false&environment=${environment}`,
+            )
+            .expectStatus(HttpStatus.OK)
+            .expectJsonLike({
+              entries: [
+                {
+                  _version: 18,
+                  locale: 'en-us',
+                  uid: 'bltc11602372b9095e3',
+                  _in_progress: false,
+                },
+              ],
             })
             .inspect()
         })
