@@ -22,24 +22,15 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-Start playing with Open Schema Mock frameworks e.g. 
-
-1. https://github.com/jormaechea/open-api-mocker#readme
-   - https://fakerjs.dev/api/
-2. https://github.com/penx/openapi-mock
-3. https://medium.com/tuimm/api-mocking-with-openapi-d0f7127ce3a7
-4. https://github.com/miragejs
-5. https://mockoon.com/download/
+## Description of POC details
 
 Create an in-memory mongo database `yarn add mongodb-memory-server`
 
 Create mongoose and pagination `yarn add mongoose` and `yarn add mongoose-paginate`
 
 For mocking mongoose use `yarn add -D mockingoose` 
+
+https://docs.nestjs.com/recipes/mongodb is a better way of integrating with MongoDb with Nest so in production some of this should be refactored
 
 Mocking a vendor like contentstack
 
