@@ -15,6 +15,10 @@ describe('AppController (e2e)', () => {
       imports: [AppModule],
     }).compile()
     app = moduleRef.createNestApplication()
+    app.enableVersioning({
+      type: VersioningType.URI,
+      defaultVersion: '1',
+    })
     await app.init()
     await app.listen(4444)
     await dbContext()

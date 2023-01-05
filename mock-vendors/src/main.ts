@@ -1,4 +1,5 @@
 require('dotenv').config()
+import { VersioningType } from '@nestjs/common/enums/version-type.enum'
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { config } from './config'
@@ -8,6 +9,10 @@ const { port } = config
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule)
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: '1',
+  })
   try {
     await dbContext()
     console.debug('Connection to Mongo open')
