@@ -11,7 +11,6 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule)
   app.enableVersioning({
     type: VersioningType.URI,
-    defaultVersion: '1',
   })
   try {
     await dbContext()
