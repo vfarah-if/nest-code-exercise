@@ -131,4 +131,19 @@ describe('AppController (e2e)', () => {
       })
     })
   })
+
+  describe('Health', () => {
+    describe('GET Health', () => {
+      it('should get a version for the health check', async () => {
+        return await pactum
+          .spec()
+          .get('v1/health')
+          .expectStatus(HttpStatus.OK)
+          .expectJsonLike({
+            version: 'Unknown',
+          })
+          .inspect()
+      })
+    })
+  })
 })

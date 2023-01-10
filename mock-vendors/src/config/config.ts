@@ -21,6 +21,7 @@ const config = {
   contentStackDeliveryApi: {
     environment: process.env.CONTENT_STACK_ENVIRONMENT,
   },
+  version: process.env.VERSION || 'Unknown',
 }
 console.debug('.env', config)
 export { config }

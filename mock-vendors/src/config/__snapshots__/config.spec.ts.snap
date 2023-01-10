@@ -16,5 +16,6 @@ exports[`config should configure defaults 1`] = `
   "isProd": false,
   "isTest": true,
   "port": 5555,
+  "version": "0.0.1",
 }
 `;
