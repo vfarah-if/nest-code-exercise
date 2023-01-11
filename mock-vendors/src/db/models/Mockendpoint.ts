@@ -89,5 +89,5 @@ mockendpointSchema.index(
 )
 mockendpointSchema.plugin(mongoosePaginate)
 
-const Mockendpoint = model('mockendpoint', mockendpointSchema)
+const Mockendpoint = model('mockendpoints', mockendpointSchema)
 export default Mockendpoint

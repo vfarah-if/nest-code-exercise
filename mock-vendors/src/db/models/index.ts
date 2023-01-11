@@ -1,2 +1,7 @@
 import Mockendpoint from './Mockendpoint'
-export default Mockendpoint
+import SAPUser from './SAPUser'
+
+export default {
+  ...Mockendpoint,
+  ...SAPUser,
+}

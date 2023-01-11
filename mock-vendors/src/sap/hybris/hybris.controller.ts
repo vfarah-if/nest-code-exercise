@@ -1,4 +1,11 @@
-import { Controller } from '@nestjs/common';
+import { Controller } from '@nestjs/common'
 
-@Controller('hybris')
-export class HybrisController {}
+@Controller()
+export class HybrisController {
+  getWhoAmI() {
+	
+  }
+}
+
+
+// /json/transition/session-who-am-i
