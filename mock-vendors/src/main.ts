@@ -1,4 +1,5 @@
 require('dotenv').config()
+import { ValidationPipe } from '@nestjs/common'
 import { VersioningType } from '@nestjs/common/enums/version-type.enum'
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
@@ -12,6 +13,7 @@ async function bootstrap(): Promise<void> {
   app.enableVersioning({
     type: VersioningType.URI,
   })
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
   try {
     await dbContext()
     console.debug('Connection to Mongo open')
