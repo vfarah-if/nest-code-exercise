@@ -19,5 +19,5 @@ export class AuthDto {
   lastName?: string
 
   @Optional()
-  otherUserDetails: object
+  other: object
 }

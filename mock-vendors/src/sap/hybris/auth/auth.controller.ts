@@ -1,20 +1,21 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
 import { AuthService } from './auth.service'
-import { AuthDto } from './dto/auth.dto'
+import { AuthDto, SignInDto } from './dto'
 
-@Controller('auth')
+@Controller('sap/auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @HttpCode(HttpStatus.CREATED)
   @Post('signup')
-  async signup(@Body() user: AuthDto) {
+  signup(@Body() user: AuthDto) {
     return this.authService.signup(user)
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('signin')
-  signin(@Body() user: AuthDto) {
+  signin(@Body() user: SignInDto) {
+    console.debug('user', user)
     return this.authService.signin(user)
   }
 }

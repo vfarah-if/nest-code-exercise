@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import Mockendpoint from '../db/models'
+import Mockendpoint from '../db/models/Mockendpoint'
 import { Response } from 'express'
 
 @Injectable()

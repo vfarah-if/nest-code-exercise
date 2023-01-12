@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Response } from 'express'
-import Mockendpoint from '../../db/models'
+import Mockendpoint from '../../db/models/Mockendpoint'
 
 interface getEntriesOptions {
   response: Response<any, Record<string, any>>

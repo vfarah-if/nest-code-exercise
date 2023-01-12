@@ -1,5 +1,5 @@
 import { contentStackFixture, customerFixture } from './fixtures'
-import Mockendpoint from './models'
+import Mockendpoint from './models/Mockendpoint'
 
 export async function seedDb(): Promise<any> {
   return Promise.all([await seedCustomers(), await seedContentstack()])

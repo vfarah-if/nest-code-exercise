@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
 const mongoosePaginate = require('mongoose-paginate')
 const { Types } = Schema
-const SAPUserSchema = new Schema({
+const sapUserSchema = new Schema({
   _id: Types.ObjectId,
   email: {
     type: String,
@@ -30,7 +30,7 @@ const SAPUserSchema = new Schema({
     default: Date.now,
   },
 })
-SAPUserSchema.plugin(mongoosePaginate)
+sapUserSchema.plugin(mongoosePaginate)
 
-const SapUser = model('sapusers', SAPUserSchema)
+const SapUser = model('sapusers', sapUserSchema)
 export default SapUser

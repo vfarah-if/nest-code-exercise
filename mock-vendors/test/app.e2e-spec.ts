@@ -1,11 +1,17 @@
 require('dotenv').config()
 import { Test } from '@nestjs/testing'
-import { HttpStatus, INestApplication, VersioningType } from '@nestjs/common'
+import {
+  HttpStatus,
+  INestApplication,
+  ValidationPipe,
+  VersioningType,
+} from '@nestjs/common'
 import * as pactum from 'pactum'
 import { AppModule } from '../src/app.module'
 import { seedDb } from '../src/db/seed'
 import { closeDbContext, dbContext } from '../src/db/db_context'
 import { config } from '../src/config'
+import { AuthDto } from '../src/sap/hybris/auth/dto/auth.dto'
 
 describe('AppController (e2e)', () => {
   let app: INestApplication
@@ -18,6 +24,7 @@ describe('AppController (e2e)', () => {
     app.enableVersioning({
       type: VersioningType.URI,
     })
+    app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
     await app.init()
     await app.listen(4444)
     await dbContext()
@@ -143,6 +150,65 @@ describe('AppController (e2e)', () => {
             version: 'Unknown',
           })
           .inspect()
+      })
+    })
+  })
+
+  describe('SAP', () => {
+    describe('Hybris', () => {
+      describe('Auth', () => {
+        const user: AuthDto = {
+          email: 'john.doe@test.com',
+          password: 'P@ssword123',
+          firstName: 'John',
+          lastName: 'Doe',
+          other: {
+            language: 'en',
+            site: 'http://localhost:4444',
+          },
+        }
+        describe('Signup', () => {
+          it('should sign up with created status', async () => {
+            return await pactum
+              .spec()
+              .post('sap/auth/signup')
+              .withBody(user)
+              .expectStatus(HttpStatus.CREATED)
+          })
+
+          it('should be forbidden to sign up twice', async () => {
+            return await pactum
+              .spec()
+              .post('sap/auth/signup')
+              .withBody(user)
+              .expectStatus(HttpStatus.BAD_REQUEST)
+              .withJson({
+                statusCode: 403,
+                message: 'Credentials invalid',
+                error: 'Forbidden',
+              })
+          })
+
+          it('should be fail with bad request with no auth details', async () => {
+            return await pactum
+              .spec()
+              .post('sap/auth/signup')
+              .withBody({})
+              .expectStatus(HttpStatus.BAD_REQUEST)
+              .expectJsonLike({
+                statusCode: 400,
+                message: [
+                  'email should not be empty',
+                  'email must be an email',
+                  'password must be a string',
+                  'password should not be empty',
+                  'firstName must be a string',
+                  'lastName must be a string',
+                ],
+                error: 'Bad Request',
+              })
+          })
+        })
       })
     })
   })
