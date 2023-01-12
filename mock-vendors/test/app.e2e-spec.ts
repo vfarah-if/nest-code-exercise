@@ -12,6 +12,7 @@ import { seedDb } from '../src/db/seed'
 import { closeDbContext, dbContext } from '../src/db/db_context'
 import { config } from '../src/config'
 import { AuthDto } from '../src/sap/hybris/auth/dto/auth.dto'
+import { SignInDto } from 'src/sap/hybris/auth/dto'
 
 describe('AppController (e2e)', () => {
   let app: INestApplication
@@ -167,6 +168,12 @@ describe('AppController (e2e)', () => {
             site: 'http://localhost:4444',
           },
         }
+
+        const unauthorisedUser: SignInDto = {
+          email: 'jane.doe:sketchy.com',
+          password: 'P@ssword123',
+        }
+
         describe('Signup', () => {
           it('should sign up with created status', async () => {
             return await pactum
@@ -206,6 +213,29 @@ describe('AppController (e2e)', () => {
                   'lastName must be a string',
                 ],
                 error: 'Bad Request',
+              })
+          })
+        })
+
+        describe('Signin', () => {
+          it('should sign in with ok status', () => {
+            return pactum
+              .spec()
+              .post('sap/auth/signin')
+              .withBody(user)
+              .expectStatus(HttpStatus.OK)
+          })
+
+          it('should be unauthorised to sign in if not registered', () => {
+            return pactum
+              .spec()
+              .post('sap/auth/signin')
+              .withBody(unauthorisedUser)
+              .expectStatus(HttpStatus.UNAUTHORIZED)
+              .expectJsonLike({
+                statusCode: 401,
+                message: 'Credentials invalid',
+                error: 'Unauthorized',
               })
           })
         })
