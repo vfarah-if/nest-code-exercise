@@ -16,6 +16,10 @@ exports[`config should configure defaults 1`] = `
   "isProd": false,
   "isTest": true,
   "port": 5555,
+  "sapApi": {
+    "jwt_expire_time": "15m",
+    "jwt_secret": "hard!to-guess_secret",
+  },
   "version": "0.0.1",
 }
 `;

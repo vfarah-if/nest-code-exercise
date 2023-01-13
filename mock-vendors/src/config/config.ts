@@ -22,6 +22,10 @@ const config = {
     environment: process.env.CONTENT_STACK_ENVIRONMENT,
   },
   version: process.env.VERSION || 'Unknown',
+  sapApi: {
+    jwt_secret: process.env.JWT_SECRET,
+    jwt_expire_time: process.env.JWT_EXPIRE_TIME || '15m',
+  },
 }
 console.debug('.env', config)
 export { config }
