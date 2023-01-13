@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { customerFixture, MockEndpointType } from '../db/fixtures'
-import Mockendpoint from '../db/models'
+import Mockendpoint from '../db/models/Mockendpoint'
 import { CustomersController } from './customers.controller'
 import { CustomersService } from './customers.service'
 import { Response } from 'express'

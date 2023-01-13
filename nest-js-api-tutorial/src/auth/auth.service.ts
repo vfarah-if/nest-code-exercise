@@ -22,7 +22,7 @@ export class AuthService {
       where: { email: user.email },
     })
     if (!result) this.raiseInvalidCredentials()
-    const passwordMatch = argon.verify(result.hash, user.password)
+    const passwordMatch = await argon.verify(result.hash, user.password)
     if (!passwordMatch) this.raiseInvalidCredentials()
     const { accessToken } = await this.signToken(result.id, result.email)
     return {

@@ -1,5 +1,5 @@
 import { Optional } from '@nestjs/common'
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator'
+import { IsEmail, IsNotEmpty, IsObject, IsString } from 'class-validator'
 
 export class AuthDto {
   @IsEmail()
@@ -19,5 +19,6 @@ export class AuthDto {
   lastName?: string
 
   @Optional()
-  other: object
+  @IsObject()
+  other?: object
 }

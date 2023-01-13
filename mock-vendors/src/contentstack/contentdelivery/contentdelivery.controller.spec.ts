@@ -2,7 +2,7 @@ import { HttpStatus } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { Response } from 'express'
 import { contentStackFixture, MockEndpointType } from '../../db/fixtures'
-import Mockendpoint from '../../db/models'
+import Mockendpoint from '../../db/models/Mockendpoint'
 import { ContentDeliveryController } from './contentdelivery.controller'
 import { ContentDeliveryService } from './contentdelivery.service'
 const mockingoose = require('mockingoose')

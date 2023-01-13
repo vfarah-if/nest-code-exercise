@@ -1,5 +1,5 @@
 import { contentStackFixture, customerFixture } from './fixtures'
-import Mockendpoint from './models'
+import Mockendpoint from './models/Mockendpoint'
 import { seedContentstack, seedCustomers } from './seed'
 const mockingoose = require('mockingoose')
 

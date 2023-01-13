@@ -170,7 +170,7 @@ describe('AppController (e2e)', () => {
         }
 
         const unauthorisedUser: SignInDto = {
-          email: 'jane.doe:sketchy.com',
+          email: 'jane.doe@noauth.com',
           password: 'P@ssword123',
         }
 
@@ -237,6 +237,15 @@ describe('AppController (e2e)', () => {
                 message: 'Credentials invalid',
                 error: 'Unauthorized',
               })
+          })
+        })
+
+        describe('Signout', () => {
+          it('should always signout', () => {
+            return pactum
+              .spec()
+              .post('sap/auth/signout')
+              .expectStatus(HttpStatus.OK)
           })
         })
       })

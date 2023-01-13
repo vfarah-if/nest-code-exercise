@@ -1,4 +1,12 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Res,
+} from '@nestjs/common'
+import { Response } from 'express'
 import { AuthService } from './auth.service'
 import { AuthDto, SignInDto } from './dto'
 
@@ -9,13 +17,25 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   @Post('signup')
   signup(@Body() user: AuthDto) {
+    console.debug(user)
     return this.authService.signup(user)
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('signin')
-  signin(@Body() user: SignInDto) {
+  async signin(
+    @Res({ passthrough: true }) res: Response,
+    @Body() user: SignInDto,
+  ) {
     console.debug('user', user)
-    return this.authService.signin(user)
+    const data = await this.authService.signin(user)
+    res.cookie('token', data, { httpOnly: true })
+    return data
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('signout')
+  signout(@Res({ passthrough: true }) res: Response) {
+    res.cookie('token', '', { expires: new Date() })
   }
 }

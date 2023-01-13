@@ -7,3 +7,13 @@ export type MockEndpointType = {
   headerParams?: object
   httpStatus: string
 }
+
+export type SapUserType = {
+  email: string
+  hash: string
+  firstName: string
+  lastName: string
+  details: object
+  createdDate: Date
+  modifiedDate: Date
+}

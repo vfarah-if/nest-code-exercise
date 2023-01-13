@@ -1,6 +1,6 @@
 import { AuthDto } from '../../sap/hybris/auth/dto/auth.dto'
 import * as argon from 'argon2'
-import SapUser from '../models/SAPUser'
+import SapUser from '../models/SapUser'
 import { Types } from 'mongoose'
 
 export async function addSapUser(user: AuthDto) {
@@ -11,7 +11,7 @@ export async function addSapUser(user: AuthDto) {
     hash,
     firstName: user.firstName,
     lastName: user.lastName,
-    other: user.other,
+    details: user.other,
   })
   await sapUser.save({ validateBeforeSave: true })
   return sapUser
