@@ -15,6 +15,7 @@ import { closeDbContext, dbContext } from '../src/db/db_context'
 import { config } from '../src/config'
 import { AuthDto } from '../src/sap/hybris/auth/dto/auth.dto'
 import { SignInDto } from 'src/sap/hybris/auth/dto'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 describe('AppController (e2e)', () => {
   let app: INestApplication
@@ -29,6 +30,12 @@ describe('AppController (e2e)', () => {
     })
     app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
     app.use(cookieParser())
+    const config = new DocumentBuilder()
+      .setTitle('mock-vendors-api')
+      .setDescription('Mock supported vendor endpoints with testing scenarios')
+      .build()
+    const document = SwaggerModule.createDocument(app, config)
+    SwaggerModule.setup('docs', app, document)
     await app.init()
     await app.listen(4444)
     await dbContext()
@@ -42,18 +49,40 @@ describe('AppController (e2e)', () => {
     await app.close()
   })
 
-  describe('Health', () => {
-    describe('GET Health', () => {
-      it('should get a version for the health check', async () => {
-        return await pactum
-          .spec()
-          .get('v1/health')
-          .expectStatus(HttpStatus.OK)
-          // TODO: Extend to check database health, which is a hood test for the database
-          .expectJsonLike({
-            version: 'Unknown',
-          })
-          .inspect()
+  describe('Mock Vendor API', () => {
+    describe('Health', () => {
+      describe('GET Health', () => {
+        it('should get a version for the health check', async () => {
+          return await pactum
+            .spec()
+            .get('v1/health')
+            .expectStatus(HttpStatus.OK)
+            // TODO: Extend to check database health, which is a hood test for the database
+            .expectJsonLike({
+              version: 'Unknown',
+            })
+            .inspect()
+        })
+      })
+    })
+
+    describe('Swagger', () => {
+      describe('GET docs', () => {
+        it('should get a swagger docs api', async () => {
+          return await pactum
+            .spec()
+            .get('docs')
+            .expectStatus(HttpStatus.OK)
+            .inspect()
+        })
+
+        it('should get a swagger as json', async () => {
+          return await pactum
+            .spec()
+            .get('docs-json')
+            .expectStatus(HttpStatus.OK)
+            .inspect()
+        })
       })
     })
   })

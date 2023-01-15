@@ -2,5 +2,5 @@
 ✔ Get rid of customer @high @done(23-01-15 06:57)
 ✔ Clean up seed content stack endpoints to be as it currently is @high @started(23-01-15 06:57) @done(23-01-15 07:40) @lasted(43m31s)
 ☐ Seed healthpoint to check database good @medium
-☐ Add swagger for outside and endpoint deployment @high
+✔ Add swagger for outside and endpoint deployment @high @done(23-01-15 08:03)
 ☐ Add unit tests for SAP stuff to expand on edge cases e2e tests did not cover @today

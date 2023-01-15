@@ -19,8 +19,8 @@ export class ContentDeliveryService {
     contentTypeUid,
     environment,
     locale = 'en-gb',
-    includeFallback = true,
-    includeBranch = false,
+    includeFallback,
+    includeBranch,
     headers = undefined,
   }: getEntriesOptions): Promise<
     | import('express').Response<any, Record<string, any>>
