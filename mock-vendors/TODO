@@ -1,1 +1,5 @@
 ☐ Convert all the MongoDB stuff using https://docs.nestjs.com/recipes/mongodb @low
+☐ Get rid of customer @high
+☐ Clean up content stack endpoints to be as it currently is @high
+☐ Seed healthpoint to check database good @medium
+☐ Add swagger for outside and endpoint deployment @high
