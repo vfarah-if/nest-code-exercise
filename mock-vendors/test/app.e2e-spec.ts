@@ -7,6 +7,8 @@ import {
   VersioningType,
 } from '@nestjs/common'
 import * as pactum from 'pactum'
+import * as cookieParser from 'cookie-parser'
+
 import { AppModule } from '../src/app.module'
 import { seedDb } from '../src/db/seed'
 import { closeDbContext, dbContext } from '../src/db/db_context'
@@ -26,6 +28,7 @@ describe('AppController (e2e)', () => {
       type: VersioningType.URI,
     })
     app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
+    app.use(cookieParser())
     await app.init()
     await app.listen(4444)
     await dbContext()
@@ -223,6 +226,8 @@ describe('AppController (e2e)', () => {
               .spec()
               .post('sap/auth/signin')
               .withBody(user)
+              .stores('accessToken', 'accessToken')
+              .withCookies('token', '$S{accessToken}')
               .expectStatus(HttpStatus.OK)
           })
 
@@ -246,6 +251,72 @@ describe('AppController (e2e)', () => {
               .spec()
               .post('sap/auth/signout')
               .expectStatus(HttpStatus.OK)
+          })
+        })
+
+        describe('WhoAmI with JWT Logic', () => {
+          describe('When not signed in', () => {
+            it('should ok an anonymous user', () => {
+              pactum
+                .spec()
+                .post('sap/auth/signout')
+                .expectStatus(HttpStatus.OK)
+                .inspect()
+              return pactum
+                .spec()
+                .get('json/transition/session-who-am-i')
+                .expectStatus(HttpStatus.OK)
+                .expectJsonLike({
+                  isSignedIn: false,
+                })
+                .inspect()
+            })
+          })
+
+          describe('When signed in', () => {
+            let cookie
+            beforeAll(() => {
+              return pactum
+                .spec()
+                .post('sap/auth/signin')
+                .withBody({
+                  email: 'john.doe@newlook.com',
+                  password: 'P@ssw0rd123',
+                })
+                .expectStatus(HttpStatus.OK)
+                .returns((ctx) => {
+                  console.log('COOKIEE', cookie)
+                  cookie = ctx.res.headers['set-cookie']
+                  return ctx.res.headers['set-cookie']
+                })
+            })
+
+            it('should get a signed in user when auth token within cookie', () => {
+              return pactum
+                .spec()
+                .get('json/transition/session-who-am-i')
+                .expectStatus(HttpStatus.OK)
+                .withCookies(cookie[0])
+                .expectJsonLike({
+                  isSignedIn: true,
+                  accessToken: {
+                    token_type: 'bearer',
+                    scope: 'default openid',
+                  },
+                  customerData: {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                  },
+                  newLookSessionData: {
+                    country: 'GB',
+                    currency: 'GBP',
+                    storeId: 'uk-store',
+                    department: 'Mens',
+                    language: 'en',
+                  },
+                })
+                .inspect()
+            })
           })
         })
       })

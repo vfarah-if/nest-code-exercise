@@ -2,6 +2,7 @@ require('dotenv').config()
 import { ValidationPipe } from '@nestjs/common'
 import { VersioningType } from '@nestjs/common/enums/version-type.enum'
 import { NestFactory } from '@nestjs/core'
+import * as cookieParser from 'cookie-parser'
 import { AppModule } from './app.module'
 import { config } from './config'
 import { closeDbContext, dbContext } from './db/db_context'
@@ -14,6 +15,7 @@ async function bootstrap(): Promise<void> {
     type: VersioningType.URI,
   })
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
+  app.use(cookieParser())
   try {
     await dbContext()
     console.debug('Connection to Mongo open')

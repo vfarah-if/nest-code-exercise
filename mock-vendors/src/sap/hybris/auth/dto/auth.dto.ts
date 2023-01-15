@@ -19,6 +19,5 @@ export class AuthDto {
   lastName?: string
 
   @Optional()
-  @IsObject()
   other?: object
 }

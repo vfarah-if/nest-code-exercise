@@ -10,10 +10,8 @@ export type MockEndpointType = {
 
 export type SapUserType = {
   email: string
-  hash: string
+  password: string
   firstName: string
   lastName: string
-  details: object
-  createdDate: Date
-  modifiedDate: Date
+  other: any
 }

@@ -1,13 +1,14 @@
-import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common'
+import { Controller, Get, HttpCode, HttpStatus, Req } from '@nestjs/common'
+import { Request } from 'express'
+import { HybrisService } from './hybris.service'
 
 @Controller()
 export class HybrisController {
+  constructor(private service: HybrisService) {}
+
   @HttpCode(HttpStatus.OK)
   @Get('json/transition/session-who-am-i')
-  getWhoAmI() {
-    //cookieparse
-    // parse for the details that can be passed in
+  getWhoAmI(@Req() req: Request) {
+    return this.service.getWhoAmI(req)
   }
 }
-
-// /json/transition/session-who-am-i

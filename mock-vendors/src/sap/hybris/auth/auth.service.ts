@@ -9,6 +9,7 @@ import SapUser from '../../../db/models/SapUser'
 import * as argon from 'argon2'
 import { JwtService } from '@nestjs/jwt'
 import { config } from '../../../config'
+import { Request } from 'express'
 
 @Injectable()
 export class AuthService {
@@ -41,10 +42,6 @@ export class AuthService {
     return accessToken
   }
 
-  private raiseInvalidCredentials() {
-    throw new UnauthorizedException('Credentials invalid')
-  }
-
   async signToken(id: string, email: string): Promise<{ accessToken: string }> {
     const payload = {
       sub: id,
@@ -57,5 +54,20 @@ export class AuthService {
     return {
       accessToken: token,
     }
+  }
+
+  decodeToken(token: string): string | { [key: string]: any } {
+    return this.jwtService.decode(token)
+  }
+
+  extractJWT(req: Request): string | null {
+    if (req.cookies && 'token' in req.cookies) {
+      return req.cookies.token
+    }
+    return null
+  }
+
+  private raiseInvalidCredentials() {
+    throw new UnauthorizedException('Credentials invalid')
   }
 }

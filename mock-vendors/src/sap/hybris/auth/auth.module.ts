@@ -16,6 +16,7 @@ import { config } from '../../../config'
       signOptions: { expiresIn: '7d' },
     }),
   ],
+  exports: [AuthService],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
 })
