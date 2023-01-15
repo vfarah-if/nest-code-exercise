@@ -1,21 +1,14 @@
-import { contentStackFixture, customerFixture } from './fixtures'
+import { contentStackFixture, whoamiFixture, sapUsersFixture } from './fixtures'
 import Mockendpoint from './models/Mockendpoint'
-import { seedContentstack, seedCustomers } from './seed'
+import { seedContentstack, seedSapWhoami, seedSapUsers } from './seed'
+import { addSapUser } from './services'
+jest.mock('./services')
+
 const mockingoose = require('mockingoose')
 
 describe('Seed', () => {
   beforeEach(() => {
     mockingoose.resetAll()
-  })
-
-  describe('seedCustomers', () => {
-    it('should seed customer data into mongodb', async () => {
-      mockingoose(Mockendpoint).toReturn(customerFixture(), 'insertMany')
-
-      await seedCustomers()
-
-      expect(Mockendpoint.insertMany).toBeCalled()
-    })
   })
 
   describe('seedContentstack', () => {
@@ -25,6 +18,26 @@ describe('Seed', () => {
       await seedContentstack()
 
       expect(Mockendpoint.insertMany).toBeCalled()
+    })
+  })
+
+  describe('seedSapWhoami', () => {
+    it('should seed who-am-i data into mongodb', async () => {
+      mockingoose(Mockendpoint).toReturn(whoamiFixture(), 'insertMany')
+
+      await seedSapWhoami()
+
+      expect(Mockendpoint.insertMany).toBeCalled()
+    })
+  })
+
+  describe('seedSapUsers', () => {
+    it('should seed sap users into mongodb', async () => {
+      await seedSapUsers()
+
+      sapUsersFixture().forEach((expectedUser) =>
+        expect(addSapUser).toBeCalledWith(expectedUser),
+      )
     })
   })
 })

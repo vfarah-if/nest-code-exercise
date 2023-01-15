@@ -42,20 +42,16 @@ describe('AppController (e2e)', () => {
     await app.close()
   })
 
-  describe('Customers', () => {
-    describe('GET Customers', () => {
-      it('should get customers', async () => {
+  describe('Health', () => {
+    describe('GET Health', () => {
+      it('should get a version for the health check', async () => {
         return await pactum
           .spec()
-          .get('v1/customers')
-          .expectStatus(HttpStatus.CREATED)
+          .get('v1/health')
+          .expectStatus(HttpStatus.OK)
+          // TODO: Extend to check database health, which is a hood test for the database
           .expectJsonLike({
-            email: 'jane.doe@newlook.com',
-            firstName: 'Jane',
-            lastName: 'Doe',
-            mobileNumber: '+44 797396 7029',
-            dateOfBirth: '1974-11-04',
-            gender: 'Male',
+            version: 'Unknown',
           })
           .inspect()
       })
@@ -139,21 +135,6 @@ describe('AppController (e2e)', () => {
             })
             .inspect()
         })
-      })
-    })
-  })
-
-  describe('Health', () => {
-    describe('GET Health', () => {
-      it('should get a version for the health check', async () => {
-        return await pactum
-          .spec()
-          .get('v1/health')
-          .expectStatus(HttpStatus.OK)
-          .expectJsonLike({
-            version: 'Unknown',
-          })
-          .inspect()
       })
     })
   })
