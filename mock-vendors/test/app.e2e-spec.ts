@@ -57,8 +57,8 @@ describe('AppController (e2e)', () => {
             .spec()
             .get('v1/health')
             .expectStatus(HttpStatus.OK)
-            // TODO: Extend to check database health, which is a hood test for the database
             .expectJsonLike({
+              database: 'Healthy',
               version: 'Unknown',
             })
             .inspect()

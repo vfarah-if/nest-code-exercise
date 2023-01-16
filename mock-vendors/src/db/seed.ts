@@ -1,14 +1,24 @@
-import { contentStackFixture, sapUsersFixture, whoamiFixture } from './fixtures'
+import {
+  contentStackFixture,
+  healthFixture,
+  sapUsersFixture,
+  whoamiFixture,
+} from './fixtures'
 
 import Mockendpoint from './models/Mockendpoint'
 import { addSapUser } from './services'
 
 export async function seedDb(): Promise<any> {
   return Promise.all([
+    await seedHealthCheck(),
     await seedContentstack(),
     await seedSapUsers(),
     await seedSapWhoami(),
   ])
+}
+
+export async function seedHealthCheck() {
+  return await Mockendpoint.insertMany(healthFixture())
 }
 
 export async function seedContentstack() {

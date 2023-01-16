@@ -1,6 +1,16 @@
-import { contentStackFixture, whoamiFixture, sapUsersFixture } from './fixtures'
+import {
+  contentStackFixture,
+  whoamiFixture,
+  sapUsersFixture,
+  healthFixture,
+} from './fixtures'
 import Mockendpoint from './models/Mockendpoint'
-import { seedContentstack, seedSapWhoami, seedSapUsers } from './seed'
+import {
+  seedContentstack,
+  seedSapWhoami,
+  seedSapUsers,
+  seedHealthCheck,
+} from './seed'
 import { addSapUser } from './services'
 jest.mock('./services')
 
@@ -9,6 +19,16 @@ const mockingoose = require('mockingoose')
 describe('Seed', () => {
   beforeEach(() => {
     mockingoose.resetAll()
+  })
+
+  describe('seedContentstack', () => {
+    it('should seed health check database check into mongodb', async () => {
+      mockingoose(Mockendpoint).toReturn(healthFixture(), 'insertMany')
+
+      await seedHealthCheck()
+
+      expect(Mockendpoint.insertMany).toBeCalled()
+    })
   })
 
   describe('seedContentstack', () => {
