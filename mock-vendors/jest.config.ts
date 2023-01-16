@@ -10,6 +10,14 @@ const config: Config = {
   collectCoverageFrom: ['**/*.(t|j)s', '!main.ts', '!**/*.module.ts'],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80,
+    },
+  },
 }
 // Configure test environment variables
 require('dotenv').config({ path: './test.env' })
