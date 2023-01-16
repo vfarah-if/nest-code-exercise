@@ -2,6 +2,7 @@ import { DocumentType, MockEndpointType } from '../types'
 
 export function whoamiFixture(): (DocumentType | MockEndpointType)[] {
   const anonymousResponse = {
+    isSignedIn: false,
     accessToken: {
       access_token: 'vIvfxOIwEyx4KB4WPDhR-ud0zM0',
       token_type: 'bearer',
@@ -11,6 +12,7 @@ export function whoamiFixture(): (DocumentType | MockEndpointType)[] {
   }
   const whoamiUrl = 'json/transition/session-who-am-i'
   const loggedinResponse = {
+    isSignedIn: true,
     accessToken: {
       access_token: 'vIvfxOIwEyx4KB4WPDhR-ud0zM0',
       token_type: 'bearer',
@@ -40,7 +42,7 @@ export function whoamiFixture(): (DocumentType | MockEndpointType)[] {
       method: 'GET',
       jsonResponse: anonymousResponse,
       headerParams: {
-        jsession: 'anonymous.app1-ee2',
+        JSESSION: 'anonymous.app1-ee2',
       },
       httpStatus: 'OK',
     },
@@ -49,7 +51,7 @@ export function whoamiFixture(): (DocumentType | MockEndpointType)[] {
       method: 'GET',
       jsonResponse: loggedinResponse,
       headerParams: {
-        jsession: 'loggedin.app1-ee2',
+        JSESSION: 'loggedin.app1-ee2',
       },
       httpStatus: 'OK',
     },
@@ -58,7 +60,7 @@ export function whoamiFixture(): (DocumentType | MockEndpointType)[] {
       method: 'GET',
       jsonResponse: loggedinResponse,
       headerParams: {
-        jsession: 'expired.app1-ee2',
+        JSESSION: 'expired.app1-ee2',
       },
       httpStatus: 'GONE',
     },

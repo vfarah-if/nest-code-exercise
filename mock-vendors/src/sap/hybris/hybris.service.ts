@@ -1,20 +1,16 @@
-import { Injectable } from '@nestjs/common'
-import { Request } from 'express'
-import { ParamsDictionary } from 'express-serve-static-core'
-import { ParsedQs } from 'qs'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import * as argon from 'argon2'
 
 import SapUser from '../../db/models/SapUser'
 import { AuthService } from './auth/auth.service'
+import Mockendpoint from '../../db/models/Mockendpoint'
 
 @Injectable()
 export class HybrisService {
   constructor(private service: AuthService) {}
 
-  async getWhoAmI(
-    req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>,
-  ) {
-    const jwt = this.service.extractJWT(req)
+  async getWhoAmI(request, response, headers: any = undefined) {
+    const jwt = this.service.extractJWT(request)
     console.debug(jwt)
     if (jwt) {
       const accessToken = this.service.decodeToken(jwt['accessToken'])
@@ -26,8 +22,37 @@ export class HybrisService {
         if (sapUserFromJWT) return sapUserFromJWT
       }
     }
-    // TODO: get from mockendpoint database and headers
-    return { isSignedIn: false }
+    var { doc, headerParams, url } = await this.getSessionFromDb(headers)
+    console.debug(doc, headers, headerParams, url)
+    response.cookie(
+      'JSESSION',
+      headerParams ? headerParams['JSESSION'] : 'anonymous.app1-ee2',
+    )
+    return doc
+      ? response
+          // @ts-ignore
+          .status(HttpStatus[doc['httpStatus']])
+          .json(doc['jsonResponse'])
+      : response
+          .status(HttpStatus.NOT_FOUND)
+          .json({ data: `Configure test to accept GET ${url}` })
+  }
+
+  private async getSessionFromDb(headers: any) {
+    const url = 'json/transition/session-who-am-i'
+    const headerParams =
+      headers && headers['jsession']
+        ? { JSESSION: headers['jsession'] }
+        : undefined
+    const doc = await Mockendpoint.findOne({
+      url,
+      method: 'GET',
+      headerParams,
+    }).select({
+      jsonResponse: 1,
+      httpStatus: 1,
+    })
+    return { doc, headerParams, url }
   }
 
   private async getSapUserFromJWTData(

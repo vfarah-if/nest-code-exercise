@@ -242,26 +242,52 @@ describe('AppController (e2e)', () => {
           })
         })
 
-        describe('WhoAmI with JWT Logic', () => {
+        describe('WhoAmI', () => {
           describe('When not signed in', () => {
-            it('should ok an anonymous user', () => {
-              pactum
-                .spec()
-                .post('sap/auth/signout')
-                .expectStatus(HttpStatus.OK)
-                .inspect()
+            beforeAll(() => {
+              pactum.spec().post('sap/auth/signout').expectStatus(HttpStatus.OK)
+              // .inspect()
+            })
+
+            it('should ok an anonymous user by default', () => {
               return pactum
                 .spec()
                 .get('json/transition/session-who-am-i')
                 .expectStatus(HttpStatus.OK)
                 .expectJsonLike({
                   isSignedIn: false,
+                  accessToken: {
+                    access_token: 'vIvfxOIwEyx4KB4WPDhR-ud0zM0',
+                    token_type: 'bearer',
+                    expires_in: 286,
+                    scope: 'default openid',
+                  },
                 })
-                .inspect()
+                .withCookies('JSESSION', 'anonymous.app1-ee2')
+              // .inspect()
+            })
+
+            it('should ok an anonymous user when explicitly assigned header', () => {
+              return pactum
+                .spec()
+                .get('json/transition/session-who-am-i')
+                .withHeaders('jsession', 'anonymous.app1-ee2')
+                .expectStatus(HttpStatus.OK)
+                .expectJsonLike({
+                  isSignedIn: false,
+                  accessToken: {
+                    access_token: 'vIvfxOIwEyx4KB4WPDhR-ud0zM0',
+                    token_type: 'bearer',
+                    expires_in: 286,
+                    scope: 'default openid',
+                  },
+                })
+                .withCookies('JSESSION', 'anonymous.app1-ee2')
+              // .inspect()
             })
           })
 
-          describe('When signed in', () => {
+          describe('When signed in with JWT', () => {
             let cookie
             beforeAll(() => {
               return pactum
@@ -273,8 +299,8 @@ describe('AppController (e2e)', () => {
                 })
                 .expectStatus(HttpStatus.OK)
                 .returns((ctx) => {
-                  console.log('COOKIEE', cookie)
                   cookie = ctx.res.headers['set-cookie']
+                  console.debug('COOKIEE', cookie)
                   return ctx.res.headers['set-cookie']
                 })
             })
@@ -304,6 +330,52 @@ describe('AppController (e2e)', () => {
                   },
                 })
                 .inspect()
+            })
+          })
+
+          describe('When signing in with headers', () => {
+            beforeAll(() => {
+              // make sure there is no JWT token
+              pactum.spec().post('sap/auth/signout').expectStatus(HttpStatus.OK)
+              // .inspect()
+            })
+
+            it('should ok a logged in user', () => {
+              return pactum
+                .spec()
+                .get('json/transition/session-who-am-i')
+                .withHeaders('jsession', 'loggedin.app1-ee2')
+                .expectStatus(HttpStatus.OK)
+                .expectJsonLike({
+                  isSignedIn: true,
+                  accessToken: {
+                    access_token: 'vIvfxOIwEyx4KB4WPDhR-ud0zM0',
+                    token_type: 'bearer',
+                    expires_in: 286,
+                    scope: 'default openid',
+                  },
+                })
+                .withCookies('JSESSION', 'loggedin.app1-ee2')
+              // .inspect()
+            })
+
+            it('should expire a logged in user', () => {
+              return pactum
+                .spec()
+                .get('json/transition/session-who-am-i')
+                .withHeaders('jsession', 'expired.app1-ee2')
+                .expectStatus(HttpStatus.GONE)
+                .expectJsonLike({
+                  isSignedIn: true,
+                  accessToken: {
+                    access_token: 'vIvfxOIwEyx4KB4WPDhR-ud0zM0',
+                    token_type: 'bearer',
+                    expires_in: 286,
+                    scope: 'default openid',
+                  },
+                })
+                .withCookies('JSESSION', 'expired.app1-ee2')
+              // .inspect()
             })
           })
         })

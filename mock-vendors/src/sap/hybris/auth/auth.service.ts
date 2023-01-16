@@ -9,7 +9,7 @@ import SapUser from '../../../db/models/SapUser'
 import * as argon from 'argon2'
 import { JwtService } from '@nestjs/jwt'
 import { config } from '../../../config'
-import { Request } from 'express'
+import { Request, Response } from 'express'
 
 @Injectable()
 export class AuthService {
@@ -26,7 +26,7 @@ export class AuthService {
     }
   }
 
-  async signin(user: SignInDto) {
+  async signin(user: SignInDto, res: Response) {
     const existingUser = await SapUser.findOne({ email: user.email })
     if (!existingUser) this.raiseInvalidCredentials()
     const passwordMatch = await argon.verify(
@@ -39,6 +39,8 @@ export class AuthService {
       existingUser.id,
       existingUser['email'],
     )
+    res.cookie('token', accessToken, { httpOnly: true })
+    res.cookie('JSESSION', 'loggedin.app1-ee2')
     return accessToken
   }
 

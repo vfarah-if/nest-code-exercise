@@ -28,14 +28,14 @@ export class AuthController {
     @Body() user: SignInDto,
   ) {
     console.debug('user', user)
-    const data = await this.authService.signin(user)
-    res.cookie('token', data, { httpOnly: true })
-    return data
+    return await this.authService.signin(user, res)
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('signout')
   signout(@Res({ passthrough: true }) res: Response) {
     res.cookie('token', '', { expires: new Date() })
+    res.cookie('JSESSION', '', { expires: new Date() })
+    res.cookie('jsession', '', { expires: new Date() })
   }
 }

@@ -1,5 +1,13 @@
-import { Controller, Get, HttpCode, HttpStatus, Req } from '@nestjs/common'
-import { Request } from 'express'
+import {
+  Controller,
+  Get,
+  Headers,
+  HttpCode,
+  HttpStatus,
+  Req,
+  Res,
+} from '@nestjs/common'
+import { Request, Response } from 'express'
 import { HybrisService } from './hybris.service'
 
 @Controller()
@@ -8,7 +16,11 @@ export class HybrisController {
 
   @HttpCode(HttpStatus.OK)
   @Get('json/transition/session-who-am-i')
-  getWhoAmI(@Req() req: Request) {
-    return this.service.getWhoAmI(req)
+  getWhoAmI(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+    @Headers() headers?,
+  ) {
+    return this.service.getWhoAmI(request, response, headers)
   }
 }
