@@ -37,4 +37,10 @@ describe('AuthController', () => {
   it('should define a service for the controller', () => {
     expect(service).toBeDefined()
   })
+
+  it.todo('should signup a user onto Mongodb')
+
+  it.todo('should signin a user storing a jwt')
+
+  it.todo('should signout a user clearing token and JSESSION')
 })

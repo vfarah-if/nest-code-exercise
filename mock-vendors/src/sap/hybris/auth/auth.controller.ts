@@ -36,6 +36,5 @@ export class AuthController {
   signout(@Res({ passthrough: true }) res: Response) {
     res.cookie('token', '', { expires: new Date() })
     res.cookie('JSESSION', '', { expires: new Date() })
-    res.cookie('jsession', '', { expires: new Date() })
   }
 }

@@ -33,7 +33,7 @@ export class ContentDeliveryService {
       `&environment=${environment}`
     const headerParams =
       headers && headers['x-test'] ? { 'x-test': headers['x-test'] } : undefined
-    console.debug('Finding entries for ', url, 'Headers: ', headers)
+    // console.debug('Finding entries for ', url, 'Headers: ', headers)
     const doc = await Mockendpoint.findOne({
       url,
       method: 'GET',
@@ -42,7 +42,7 @@ export class ContentDeliveryService {
       jsonResponse: 1,
       httpStatus: 1,
     })
-    console.log(doc)
+    // console.debug(doc)
     return doc
       ? response
           // @ts-ignore

@@ -25,4 +25,16 @@ describe('HybrisController', () => {
   it('should have service defined', () => {
     expect(service).toBeDefined()
   })
+
+  it.todo('should getWhoAmI from a token')
+
+  it.todo(
+    'should getWhoAmI from a header allowing anoymous data to be returned',
+  )
+
+  it.todo(
+    'should getWhoAmI from a header allowing logged in data to be returned',
+  )
+
+  it.todo('should getWhoAmI from a header showing expiration of the session')
 })

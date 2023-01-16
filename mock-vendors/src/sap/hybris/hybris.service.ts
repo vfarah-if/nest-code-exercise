@@ -4,12 +4,17 @@ import * as argon from 'argon2'
 import SapUser from '../../db/models/SapUser'
 import { AuthService } from './auth/auth.service'
 import Mockendpoint from '../../db/models/Mockendpoint'
+import { Request, Response } from 'express'
 
 @Injectable()
 export class HybrisService {
   constructor(private service: AuthService) {}
 
-  async getWhoAmI(request, response, headers: any = undefined) {
+  async getWhoAmI(
+    request: Request,
+    response: Response,
+    headers: any = undefined,
+  ) {
     const jwt = this.service.extractJWT(request)
     console.debug(jwt)
     if (jwt) {

@@ -91,15 +91,15 @@ export class ContentDeliveryController {
     @Query('include_branch') includeBranch?: boolean,
     @Headers() headers?,
   ): Promise<Response<any, Record<string, any>>> {
-    console.debug(
-      'From Controller',
-      headers,
-      contentTypeUid,
-      environment || config.contentStackDeliveryApi.environment,
-      locale,
-      includeFallback,
-      includeBranch,
-    )
+    // console.debug(
+    //   'From Controller',
+    //   headers,
+    //   contentTypeUid,
+    //   environment || config.contentStackDeliveryApi.environment,
+    //   locale,
+    //   includeFallback,
+    //   includeBranch,
+    // )
     return this.service.getEntries({
       response,
       contentTypeUid,

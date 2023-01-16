@@ -22,10 +22,10 @@ const dbContext = async (): Promise<Mongoose> => {
   let uri = dbUrl
   let mongoDb = undefined
   if (isInMemoryDatabase) {
-    console.debug(
-      `Preparing inMemoryDatabase ${dbName} on port ${dbPort} with user '${dbUser}'
-		 password '${dbPassword}'`,
-    )
+    // console.debug(
+    //   `Preparing inMemoryDatabase ${dbName} on port ${dbPort} with user '${dbUser}'
+    //  password '${dbPassword}'`,
+    // )
     mongoDb = await MongoMemoryServer.create({
       auth: {
         customRootName: dbUser,
