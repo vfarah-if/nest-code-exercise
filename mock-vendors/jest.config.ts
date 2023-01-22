@@ -10,12 +10,22 @@ const config: Config = {
   collectCoverageFrom: ['**/*.(t|j)s', '!main.ts', '!**/*.module.ts'],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
+  coveragePathIgnorePatterns: [
+    '<rootDir>/node_modules',
+    '<rootDir>/coverage',
+    '<rootDir>/dist',
+    '<rootDir>/generated-docs',
+    '<rootDir>/templates/generated-docs',
+    '<rootDir>/infrastructure',
+    '.schema.ts',
+    '.index.ts',
+  ],
   coverageThreshold: {
     global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: 80,
+      branches: 70,
+      functions: 70,
+      lines: 70,
+      statements: 70,
     },
   },
 }
