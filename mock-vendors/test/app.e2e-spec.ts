@@ -1,7 +1,8 @@
-require('dotenv').config()
 import { Test } from '@nestjs/testing'
 import { HttpStatus, INestApplication } from '@nestjs/common'
 import * as pactum from 'pactum'
+import * as dotenv from 'dotenv'
+dotenv.config({ path: './test.e2e.env' })
 
 import { AppModule } from '../src/app.module'
 import { config } from '../src/config'
@@ -29,7 +30,7 @@ describe('AppController (e2e)', () => {
     await app.init()
     await app.listen(port)
 
-    pactum.request.setBaseUrl('http://localhost:4444/')
+    pactum.request.setBaseUrl(`http://localhost:${port}/`)
   })
 
   afterAll(async () => {

@@ -9,7 +9,7 @@ exports[`config should configure defaults 1`] = `
     "dbName": "test-vendors",
     "dbPassword": undefined,
     "dbPort": 27017,
-    "dbUrl": "mongodb://127.0.0.1:12345/test-vendors?ssl=false&connectTimeoutMS=5000&maxPoolSize=50",
+    "dbUrl": "mongodb://127.0.0.1:27017/test-vendors?ssl=false&connectTimeoutMS=5000&maxPoolSize=50",
     "dbUser": undefined,
     "hasAuthDetails": false,
     "isInMemoryDatabase": true,

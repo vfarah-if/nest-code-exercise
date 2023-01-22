@@ -28,7 +28,6 @@ const config: Config = {
       statements: 70,
     },
   },
+  setupFiles: ['../setup.tests.ts'],
 }
-// Configure test environment variables
-require('dotenv').config({ path: './test.env' })
 export default config
