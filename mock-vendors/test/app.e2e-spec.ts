@@ -1,21 +1,19 @@
 require('dotenv').config()
 import { Test } from '@nestjs/testing'
-import {
-  HttpStatus,
-  INestApplication,
-  ValidationPipe,
-  VersioningType,
-} from '@nestjs/common'
+import { HttpStatus, INestApplication } from '@nestjs/common'
 import * as pactum from 'pactum'
-import * as cookieParser from 'cookie-parser'
 
 import { AppModule } from '../src/app.module'
-import { seedDb } from '../src/db/seed'
-import { closeDbContext, dbContext } from '../src/db/db_context'
 import { config } from '../src/config'
 import { AuthDto } from '../src/sap/hybris/auth/dto/auth.dto'
 import { SignInDto } from 'src/sap/hybris/auth/dto'
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import {
+  setupApp,
+  setupDatabase,
+  setupSwagger,
+  shutDown,
+} from '../src/infrastructure/setup'
+const { port } = config
 
 describe('AppController (e2e)', () => {
   let app: INestApplication
@@ -25,28 +23,17 @@ describe('AppController (e2e)', () => {
       imports: [AppModule],
     }).compile()
     app = moduleRef.createNestApplication()
-    app.enableVersioning({
-      type: VersioningType.URI,
-    })
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
-    app.use(cookieParser())
-    const config = new DocumentBuilder()
-      .setTitle('mock-vendors-api')
-      .setDescription('Mock supported vendor endpoints with testing scenarios')
-      .build()
-    const document = SwaggerModule.createDocument(app, config)
-    SwaggerModule.setup('docs', app, document)
+    setupApp(app)
+    setupSwagger(app)
+    await setupDatabase(app)
     await app.init()
-    await app.listen(4444)
-    await dbContext()
-    await seedDb()
+    await app.listen(port)
 
     pactum.request.setBaseUrl('http://localhost:4444/')
   })
 
   afterAll(async () => {
-    await closeDbContext()
-    await app.close()
+    await shutDown(app, false)
   })
 
   describe('Mock Vendor API', () => {
