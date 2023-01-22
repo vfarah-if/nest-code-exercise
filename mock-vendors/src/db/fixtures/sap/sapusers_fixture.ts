@@ -1,4 +1,4 @@
-import { DocumentType, SapUserType } from '../types'
+import { SapUserType } from '../../types'
 
 export function sapUsersFixture(): (
   | SapUserType

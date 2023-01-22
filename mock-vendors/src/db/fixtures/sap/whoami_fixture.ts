@@ -1,6 +1,6 @@
-import { DocumentType, MockEndpointType } from '../types'
+import { MockEndpointType } from '../../types'
 
-export function whoamiFixture(): (DocumentType | MockEndpointType)[] {
+export function whoamiFixture(): MockEndpointType[] {
   const anonymousResponse = {
     isSignedIn: false,
     accessToken: {

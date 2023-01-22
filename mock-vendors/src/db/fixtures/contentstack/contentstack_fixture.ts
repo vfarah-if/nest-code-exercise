@@ -1,8 +1,8 @@
 import { nl_homepage_en_gb } from './nl_homepage_en_gb'
-import { DocumentType, MockEndpointType } from '../types'
+import { MockEndpointType } from '../../types'
 import { config } from '../../../config'
 
-export function contentStackFixture(): (DocumentType | MockEndpointType)[] {
+export function contentStackFixture(): MockEndpointType[] {
   return [
     // https://{{base_url}}/v3/content_types/{{content_type_uid}}/entries
     //  ?locale={{locale}}&include_fallback=true&include_branch=false&environment={{environment}}

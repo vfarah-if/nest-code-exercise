@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { healthFixture, MockEndpointType } from '../db/fixtures'
+import { MockEndpointType } from '../db/types'
+import { healthFixture } from '../db/fixtures'
 import Mockendpoint from '../db/models/Mockendpoint'
 import { HealthController } from './health.controller'
 import { HealthService } from './health.service'

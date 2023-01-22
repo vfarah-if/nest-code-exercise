@@ -1,4 +1,4 @@
-import { MockEndpointType } from './types'
+import { MockEndpointType } from '../types'
 
 export function healthFixture(): (DocumentType | MockEndpointType)[] {
   return [
