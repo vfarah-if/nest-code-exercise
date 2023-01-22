@@ -9,15 +9,17 @@ const config = {
   isDev: process.env.NODE_ENV === DEV_NODE_ENV,
   isProd: process.env.NODE_ENV === PROD_NODE_DEV,
   isTest: process.env.NODE_ENV === TEST_NODE_EV,
-  isInMemoryDatabase:
-    process.env.DATABASE_IN_MEMORY?.toLowerCase() === 'true' || true,
-  dbPort: parseInt(process.env.DB_PORT || DEFAULT_DB_PORT, 10),
-  dbUrl: process.env.DATABASE_URL,
-  dbName: process.env.DATABASE_DBNAME || DEFAULT_DB_NAME,
-  dbUser: process.env.DATABASE_USER,
-  dbPassword: process.env.DATABASE_PASS,
-  hasAuthDetails:
-    process.env.DATABASE_USER || process.env.DATABASE_PASS ? true : false,
+  database: {
+    isInMemoryDatabase:
+      process.env.DATABASE_IN_MEMORY?.toLowerCase() === 'true' || true,
+    dbPort: parseInt(process.env.DB_PORT || DEFAULT_DB_PORT, 10),
+    dbUrl: process.env.DATABASE_URL,
+    dbName: process.env.DATABASE_DBNAME || DEFAULT_DB_NAME,
+    dbUser: process.env.DATABASE_USER,
+    dbPassword: process.env.DATABASE_PASS,
+    hasAuthDetails:
+      process.env.DATABASE_USER || process.env.DATABASE_PASS ? true : false,
+  },
   contentStackDeliveryApi: {
     environment: process.env.CONTENT_STACK_ENVIRONMENT,
   },
